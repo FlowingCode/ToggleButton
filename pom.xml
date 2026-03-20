@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.flowingcode.vaadin.addons</groupId>
-    <artifactId>template-addon</artifactId>
+    <artifactId>fc-toggle-button-addon</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>Template Add-on</name>
-    <description>Template Add-on for Vaadin Flow</description>
-    <url>https://www.flowingcode.com/en/open-source/</url>
+    <name>FC Toggle Button Add-On</name>
+    <description>Toggle button built on Vaadin components with support for customizable labels and icons</description>
+    <url>https://github.com/FlowingCode/FCToggleButton</url>
 
     <properties>
         <vaadin.version>24.9.1</vaadin.version>
@@ -38,9 +38,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/FlowingCode/AddonStarter24</url>
-        <connection>scm:git:git://github.com/FlowingCode/AddonStarter24.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:/FlowingCode/AddonStarter24.git</developerConnection>
+        <url>https://github.com/FlowingCode/FCToggleButton</url>
+        <connection>scm:git:git://github.com/FlowingCode/FCToggleButton.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:/FlowingCode/FCToggleButton.git</developerConnection>
         <tag>master</tag>
     </scm>
     
