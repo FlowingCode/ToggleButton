@@ -33,6 +33,8 @@ public class FCToggleButtonDemoView extends TabbedDemo {
 
   public FCToggleButtonDemoView() {
     addDemo(FCToggleButtonDemo.class);
+    addDemo(FCToggleButtonVariantsDemo.class);
+    addDemo(FCToggleButtonEventsDemo.class);
     setSizeFull();
   }
 }

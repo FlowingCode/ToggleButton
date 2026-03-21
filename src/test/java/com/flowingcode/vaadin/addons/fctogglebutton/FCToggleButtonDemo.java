@@ -21,16 +21,58 @@ package com.flowingcode.vaadin.addons.fctogglebutton;
 
 import com.flowingcode.vaadin.addons.demo.DemoSource;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @DemoSource
-@PageTitle("FC Toggle Button Add-On Demo")
+@PageTitle("Labels and Icons")
 @SuppressWarnings("serial")
-@Route(value = "demo", layout = FCToggleButtonDemoView.class)
+@Route(value = "labels", layout = FCToggleButtonDemoView.class)
 public class FCToggleButtonDemo extends Div {
 
   public FCToggleButtonDemo() {
-    add(new FCToggleButton());
+
+    FCToggleButton basic = new FCToggleButton();
+
+    FCToggleButton withLeftLabel = new FCToggleButton()
+        .setLeftLabel("Off");
+
+    FCToggleButton withRightLabel = new FCToggleButton()
+        .setRightLabel("On");
+
+    FCToggleButton withBothLabels = new FCToggleButton()
+        .setLeftLabel("Off")
+        .setRightLabel("On");
+
+    FCToggleButton withLeftIcon = new FCToggleButton()
+        .setLeftIcon(new Icon(VaadinIcon.MOON));
+
+    FCToggleButton withRightIcon = new FCToggleButton()
+        .setRightIcon(new Icon(VaadinIcon.SUN_O));
+
+    FCToggleButton withBothIcons = new FCToggleButton()
+        .setLeftIcon(new Icon(VaadinIcon.MOON))
+        .setRightIcon(new Icon(VaadinIcon.SUN_O));
+
+    FCToggleButton withLabelsAndIcons = new FCToggleButton()
+        .setLeftIcon(new Icon(VaadinIcon.MOON))
+        .setLeftLabel("Dark")
+        .setRightLabel("Light")
+        .setRightIcon(new Icon(VaadinIcon.SUN_O));
+
+    add(new VerticalLayout(
+        new H3("Basic"),
+        basic,
+        new H3("With labels"),
+        new HorizontalLayout(withLeftLabel, withRightLabel, withBothLabels),
+        new H3("With icons"),
+        new HorizontalLayout(withLeftIcon, withRightIcon, withBothIcons),
+        new H3("With labels and icons"),
+        withLabelsAndIcons));
   }
 }
