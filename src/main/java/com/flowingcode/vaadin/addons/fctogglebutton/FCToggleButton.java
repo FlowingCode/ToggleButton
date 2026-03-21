@@ -32,7 +32,14 @@ import com.vaadin.flow.component.shared.HasThemeVariant;
 import com.vaadin.flow.component.shared.HasTooltip;
 import com.vaadin.flow.component.shared.Tooltip;
 
-/** Java bridge for the fc-toggle-button LitElement component. */
+/**
+ * A toggle button component built on Vaadin with support for customizable labels and icons.
+ *
+ * <p>The component displays a switch with optional left and right labels or icons, and fires a
+ * value-change event when toggled.
+ *
+ * @since 1.0.0
+ */
 @Tag("fc-toggle-button")
 @JsModule("./fc-toggle-button.js")
 @NpmPackage(value = "lit", version = "3.3.2")
@@ -45,10 +52,16 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
 
     private ItemLabelGenerator<Boolean> itemLabelGenerator = b -> "";
 
+    /** Creates a new toggle button with an initial value of {@code false}. */
     public FCToggleButton() {
         this(false);
     }
 
+    /**
+     * Creates a new toggle button with the given initial value.
+     *
+     * @param initialValue the initial checked state
+     */
     public FCToggleButton(boolean initialValue) {
         super("checked", initialValue, false);
         if (initialValue) {
@@ -74,6 +87,14 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
         return tooltip;
     }
 
+    /**
+     * Sets a generator that provides labels for the checked ({@code true}) and unchecked
+     * ({@code false}) states. The generator is called with the state value and its result is used
+     * as the right label for {@code true} and the left label for {@code false}.
+     *
+     * @param itemLabelGenerator the label generator; must not be {@code null}
+     * @since 1.0.0
+     */
     public void setItemLabelGenerator(ItemLabelGenerator<Boolean> itemLabelGenerator) {
         this.itemLabelGenerator = itemLabelGenerator;
         updateLabels();
@@ -90,19 +111,43 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
         getElement().setProperty("rightLabel", itemLabelGenerator.apply(true));
     }
 
+    /**
+     * Sets the label displayed on the left side of the toggle switch.
+     *
+     * @param label the left label text
+     * @since 1.0.0
+     */
     public void setLeftLabel(String label) {
         getElement().setProperty("leftLabel", label);
     }
 
+    /**
+     * Sets the label displayed on the right side of the toggle switch.
+     *
+     * @param label the right label text
+     * @since 1.0.0
+     */
     public void setRightLabel(String label) {
         getElement().setProperty("rightLabel", label);
     }
 
+    /**
+     * Sets the icon displayed on the left side of the toggle switch.
+     *
+     * @param icon the component to use as the left icon
+     * @since 1.0.0
+     */
     public void setLeftIcon(Component icon) {
         icon.getElement().setAttribute("slot", "left");
         add(icon);
     }
 
+    /**
+     * Sets the icon displayed on the right side of the toggle switch.
+     *
+     * @param icon the component to use as the right icon
+     * @since 1.0.0
+     */
     public void setRightIcon(Component icon) {
         icon.getElement().setAttribute("slot", "right");
         add(icon);

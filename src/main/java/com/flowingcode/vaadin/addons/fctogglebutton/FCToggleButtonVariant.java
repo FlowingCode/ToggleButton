@@ -21,7 +21,11 @@ package com.flowingcode.vaadin.addons.fctogglebutton;
 
 import com.vaadin.flow.component.shared.ThemeVariant;
 
-/** Enum for theme variants supported by the {@link FCToggleButton} component. */
+/**
+ * Theme variants for the {@link FCToggleButton} component.
+ *
+ * @since 1.0.0
+ */
 public enum FCToggleButtonVariant implements ThemeVariant {
     SMALL("small"),
     //TODO: añadir medium
