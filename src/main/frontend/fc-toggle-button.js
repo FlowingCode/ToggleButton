@@ -136,6 +136,26 @@ class FCToggleButton extends LitElement {
     }
 
     /* Size Variants */
+    :host([theme~="medium"]) .switch {
+      width: 44px;
+      height: 24px;
+    }
+
+    :host([theme~="medium"]) .slider {
+      width: 18px;
+      height: 18px;
+      top: 3px;
+      left: 3px;
+    }
+
+    :host([theme~="medium"][checked]) .slider {
+      transform: translateX(20px);
+    }
+
+    :host([theme~="medium"]) .label {
+      font-size: var(--lumo-font-size-s, 14px);
+    }
+
     :host([theme~="small"]) .switch {
       width: 32px;
       height: 18px;

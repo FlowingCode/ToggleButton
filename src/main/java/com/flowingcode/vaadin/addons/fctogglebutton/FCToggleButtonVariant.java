@@ -28,7 +28,7 @@ import com.vaadin.flow.component.shared.ThemeVariant;
  */
 public enum FCToggleButtonVariant implements ThemeVariant {
     SMALL("small"),
-    //TODO: añadir medium
+    MEDIUM("medium"),
     LARGE("large"),
     PRIMARY("primary"),
     SUCCESS("success"),

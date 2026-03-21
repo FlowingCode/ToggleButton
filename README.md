@@ -13,7 +13,7 @@ A toggle button component for Vaadin Flow that supports customizable labels and 
 * Toggle between two states with a single click
 * Customizable left and right labels
 * Support for icons on both sides via slots
-* Theme variants: `SMALL`, `LARGE`, `PRIMARY`, `SUCCESS`, `WARNING`, `ERROR`, `CONTRAST`
+* Theme variants: `SMALL`, `MEDIUM`, `LARGE`, `PRIMARY`, `SUCCESS`, `WARNING`, `ERROR`, `CONTRAST`
 * Fluent API for easy configuration
 * Full integration with Vaadin's `HasValue`, `HasSize`, `HasAriaLabel`, and `HasTooltip`
 
