@@ -93,11 +93,13 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * as the right label for {@code true} and the left label for {@code false}.
      *
      * @param itemLabelGenerator the label generator; must not be {@code null}
+     * @return this instance for method chaining
      * @since 1.0.0
      */
-    public void setItemLabelGenerator(ItemLabelGenerator<Boolean> itemLabelGenerator) {
+    public FCToggleButton setItemLabelGenerator(ItemLabelGenerator<Boolean> itemLabelGenerator) {
         this.itemLabelGenerator = itemLabelGenerator;
         updateLabels();
+        return this;
     }
 
     @Override
@@ -115,41 +117,49 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * Sets the label displayed on the left side of the toggle switch.
      *
      * @param label the left label text
+     * @return this instance for method chaining
      * @since 1.0.0
      */
-    public void setLeftLabel(String label) {
+    public FCToggleButton setLeftLabel(String label) {
         getElement().setProperty("leftLabel", label);
+        return this;
     }
 
     /**
      * Sets the label displayed on the right side of the toggle switch.
      *
      * @param label the right label text
+     * @return this instance for method chaining
      * @since 1.0.0
      */
-    public void setRightLabel(String label) {
+    public FCToggleButton setRightLabel(String label) {
         getElement().setProperty("rightLabel", label);
+        return this;
     }
 
     /**
      * Sets the icon displayed on the left side of the toggle switch.
      *
      * @param icon the component to use as the left icon
+     * @return this instance for method chaining
      * @since 1.0.0
      */
-    public void setLeftIcon(Component icon) {
+    public FCToggleButton setLeftIcon(Component icon) {
         icon.getElement().setAttribute("slot", "left");
         add(icon);
+        return this;
     }
 
     /**
      * Sets the icon displayed on the right side of the toggle switch.
      *
      * @param icon the component to use as the right icon
+     * @return this instance for method chaining
      * @since 1.0.0
      */
-    public void setRightIcon(Component icon) {
+    public FCToggleButton setRightIcon(Component icon) {
         icon.getElement().setAttribute("slot", "right");
         add(icon);
+        return this;
     }
 }
