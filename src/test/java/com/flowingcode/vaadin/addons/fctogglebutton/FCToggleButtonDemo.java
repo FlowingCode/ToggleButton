@@ -65,6 +65,18 @@ public class FCToggleButtonDemo extends Div {
         .setRightLabel("Light")
         .setRightIcon(new Icon(VaadinIcon.SUN_O));
 
+    FCToggleButton highlightLabels = new FCToggleButton()
+        .setLeftLabel("Off")
+        .setRightLabel("On")
+        .withHighlightLabel();
+
+    FCToggleButton highlightWithIcons = new FCToggleButton()
+        .setLeftIcon(new Icon(VaadinIcon.MOON))
+        .setLeftLabel("Dark")
+        .setRightLabel("Light")
+        .setRightIcon(new Icon(VaadinIcon.SUN_O))
+        .withHighlightLabel();
+
     add(new VerticalLayout(
         new H3("Basic"),
         basic,
@@ -73,6 +85,8 @@ public class FCToggleButtonDemo extends Div {
         new H3("With icons"),
         new HorizontalLayout(withLeftIcon, withRightIcon, withBothIcons),
         new H3("With labels and icons"),
-        withLabelsAndIcons));
+        withLabelsAndIcons,
+        new H3("With label highlighting"),
+        new HorizontalLayout(highlightLabels, highlightWithIcons)));
   }
 }
