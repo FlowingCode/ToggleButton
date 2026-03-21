@@ -114,6 +114,30 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
     }
 
     /**
+     * Enables label highlighting: the label on the active side is shown with the primary text color
+     * and the other with a dimmed color.
+     *
+     * @return this instance for method chaining
+     * @since 1.0.0
+     */
+    public FCToggleButton withHighlightLabel() {
+        getElement().setProperty("highlightLabel", true);
+        return this;
+    }
+
+    /**
+     * Disables label highlighting so both labels are rendered with the same color regardless of the
+     * toggle state.
+     *
+     * @return this instance for method chaining
+     * @since 1.0.0
+     */
+    public FCToggleButton withoutHighlightLabel() {
+        getElement().setProperty("highlightLabel", false);
+        return this;
+    }
+
+    /**
      * Sets the label displayed on the left side of the toggle switch.
      *
      * @param label the left label text

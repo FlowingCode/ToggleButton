@@ -10,7 +10,8 @@ class FCToggleButton extends LitElement {
     leftLabel: { type: String },
     rightLabel: { type: String },
     disabled: { type: Boolean, reflect: true },
-    readonly: { type: Boolean, reflect: true }
+    readonly: { type: Boolean, reflect: true },
+    highlightLabel: { type: Boolean, reflect: true }
   };
 
   static styles = css`
@@ -242,6 +243,7 @@ class FCToggleButton extends LitElement {
     this.rightLabel = '';
     this.disabled = false;
     this.readonly = false;
+    this.highlightLabel = false;
     this.addEventListener('click', this._toggle);
   }
 
@@ -259,11 +261,11 @@ class FCToggleButton extends LitElement {
     return html`
       <div class="container">
         <slot name="left"></slot>
-        ${this.leftLabel ? html`<span class="label ${!this.checked ? 'active' : 'inactive'}">${this.leftLabel}</span>` : ''}
+        ${this.leftLabel ? html`<span class="label ${this.highlightLabel && !this.checked ? 'active' : this.highlightLabel ? 'inactive' : ''}">${this.leftLabel}</span>` : ''}
         <div class="switch">
           <div class="slider"></div>
         </div>
-        ${this.rightLabel ? html`<span class="label ${this.checked ? 'active' : 'inactive'}">${this.rightLabel}</span>` : ''}
+        ${this.rightLabel ? html`<span class="label ${this.highlightLabel && this.checked ? 'active' : this.highlightLabel ? 'inactive' : ''}">${this.rightLabel}</span>` : ''}
         <slot name="right"></slot>
       </div>
     `;
