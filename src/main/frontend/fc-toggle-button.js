@@ -111,7 +111,7 @@ class FCToggleButton extends LitElement {
       background-color: var(--lumo-base-color, #fff);
       border-radius: 50%;
       box-shadow: var(--lumo-box-shadow-s, 0 2px 4px rgba(0,0,0,0.2));
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     :host([checked]) .slider {
@@ -128,11 +128,35 @@ class FCToggleButton extends LitElement {
     }
 
     .switch:active .slider {
-       width: 22px;
+      width: 22px;
     }
 
     :host([checked]) .switch:active .slider {
-       transform: translateX(16px);
+      transform: translateX(16px);
+    }
+
+    :host([theme~="medium"]) .switch:active .slider {
+      width: 22px;
+    }
+
+    :host([theme~="medium"][checked]) .switch:active .slider {
+      transform: translateX(16px);
+    }
+
+    :host([theme~="small"]) .switch:active .slider {
+      width: 17px;
+    }
+
+    :host([theme~="small"][checked]) .switch:active .slider {
+      transform: translateX(11px);
+    }
+
+    :host([theme~="large"]) .switch:active .slider {
+      width: 30px;
+    }
+
+    :host([theme~="large"][checked]) .switch:active .slider {
+      transform: translateX(18px);
     }
 
     /* Size Variants */
