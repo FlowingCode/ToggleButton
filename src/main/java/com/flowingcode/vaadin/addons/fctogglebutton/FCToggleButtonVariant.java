@@ -33,7 +33,8 @@ public enum FCToggleButtonVariant implements ThemeVariant {
     PRIMARY("primary"),
     SUCCESS("success"),
     WARNING("warning"),
-    ERROR("error");
+    ERROR("error"),
+    CONTRAST("contrast");
 
     private final String variant;
 

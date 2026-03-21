@@ -89,6 +89,14 @@ class FCToggleButton extends LitElement {
       background-color: var(--lumo-primary-color, #007bff);
     }
 
+    :host([theme~="contrast"][checked]) .switch {
+      background-color: var(--lumo-contrast-color, #000);
+    }
+
+    :host([theme~="contrast"]) .slider {
+      background-color: var(--lumo-base-color, #fff);
+    }
+
     /* Slider colors for variants if needed */
     :host([theme~="warning"]) .slider {
       background-color: #fff;
