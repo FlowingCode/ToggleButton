@@ -61,6 +61,16 @@ public class FCToggleButtonVariantsDemo extends Div {
     FCToggleButton large = new FCToggleButton().setRightLabel("Large");
     large.addThemeVariants(FCToggleButtonVariant.LARGE);
 
+    // Long swipe variants
+    FCToggleButton longswipeSmall = new FCToggleButton().setRightLabel("Small");
+    longswipeSmall.addThemeVariants(FCToggleButtonVariant.LONGSWIPE, FCToggleButtonVariant.SMALL);
+
+    FCToggleButton longswipeMedium = new FCToggleButton().setRightLabel("Medium");
+    longswipeMedium.addThemeVariants(FCToggleButtonVariant.LONGSWIPE, FCToggleButtonVariant.MEDIUM);
+
+    FCToggleButton longswipeLarge = new FCToggleButton().setRightLabel("Large");
+    longswipeLarge.addThemeVariants(FCToggleButtonVariant.LONGSWIPE, FCToggleButtonVariant.LARGE);
+
     // States
     FCToggleButton disabled = new FCToggleButton().setRightLabel("Disabled");
     disabled.setEnabled(false);
@@ -73,6 +83,8 @@ public class FCToggleButtonVariantsDemo extends Div {
         new HorizontalLayout(primary, success, error, warning, contrast),
         new H3("Size variants"),
         new HorizontalLayout(small, medium, large),
+        new H3("Long swipe"),
+        new HorizontalLayout(longswipeSmall, longswipeMedium, longswipeLarge),
         new H3("States"),
         new HorizontalLayout(disabled, readOnly)));
   }
