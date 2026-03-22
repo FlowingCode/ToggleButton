@@ -90,18 +90,29 @@ public class FCToggleButtonDemo extends Div {
         .setRightIcon(new Icon(VaadinIcon.SUN_O))
         .withHighlightLabel();
 
+    HorizontalLayout fieldLabelRow = new HorizontalLayout(withLabel, withLabelAndInitialValue);
+    HorizontalLayout labelsRow = new HorizontalLayout(withLeftLabel, withRightLabel, withBothLabels);
+    HorizontalLayout iconsRow = new HorizontalLayout(withLeftIcon, withRightIcon, withBothIcons);
+    HorizontalLayout labelsAndIconsRow = new HorizontalLayout(withLabelsAndIcons, withIconsInside);
+    HorizontalLayout highlightRow = new HorizontalLayout(highlightLabels, highlightWithIcons);
+    fieldLabelRow.getStyle().set("gap", "var(--lumo-space-l)");
+    labelsRow.getStyle().set("gap", "var(--lumo-space-l)");
+    iconsRow.getStyle().set("gap", "var(--lumo-space-l)");
+    labelsAndIconsRow.getStyle().set("gap", "var(--lumo-space-l)");
+    highlightRow.getStyle().set("gap", "var(--lumo-space-l)");
+
     add(new VerticalLayout(
         new H3("Basic"),
         basic,
         new H3("With field label"),
-        new HorizontalLayout(withLabel, withLabelAndInitialValue),
+        fieldLabelRow,
         new H3("With labels"),
-        new HorizontalLayout(withLeftLabel, withRightLabel, withBothLabels),
+        labelsRow,
         new H3("With icons"),
-        new HorizontalLayout(withLeftIcon, withRightIcon, withBothIcons),
+        iconsRow,
         new H3("With labels and icons"),
-        new HorizontalLayout(withLabelsAndIcons, withIconsInside),
+        labelsAndIconsRow,
         new H3("With label highlighting"),
-        new HorizontalLayout(highlightLabels, highlightWithIcons)));
+        highlightRow));
   }
 }

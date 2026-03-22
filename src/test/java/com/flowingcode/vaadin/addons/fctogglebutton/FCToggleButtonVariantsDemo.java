@@ -78,14 +78,23 @@ public class FCToggleButtonVariantsDemo extends Div {
     FCToggleButton readOnly = new FCToggleButton(true).setRightLabel("Read-only");
     readOnly.setReadOnly(true);
 
+    HorizontalLayout colorRow = new HorizontalLayout(primary, success, error, warning, contrast);
+    HorizontalLayout sizeRow = new HorizontalLayout(small, medium, large);
+    HorizontalLayout longswipeRow = new HorizontalLayout(longswipeSmall, longswipeMedium, longswipeLarge);
+    HorizontalLayout statesRow = new HorizontalLayout(disabled, readOnly);
+    colorRow.getStyle().set("gap", "var(--lumo-space-l)");
+    sizeRow.getStyle().set("gap", "var(--lumo-space-l)");
+    longswipeRow.getStyle().set("gap", "var(--lumo-space-l)");
+    statesRow.getStyle().set("gap", "var(--lumo-space-l)");
+
     add(new VerticalLayout(
         new H3("Color variants"),
-        new HorizontalLayout(primary, success, error, warning, contrast),
+        colorRow,
         new H3("Size variants"),
-        new HorizontalLayout(small, medium, large),
+        sizeRow,
         new H3("Long swipe"),
-        new HorizontalLayout(longswipeSmall, longswipeMedium, longswipeLarge),
+        longswipeRow,
         new H3("States"),
-        new HorizontalLayout(disabled, readOnly)));
+        statesRow));
   }
 }
