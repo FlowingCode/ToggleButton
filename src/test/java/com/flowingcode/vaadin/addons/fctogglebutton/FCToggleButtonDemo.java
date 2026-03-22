@@ -39,6 +39,12 @@ public class FCToggleButtonDemo extends Div {
 
     FCToggleButton basic = new FCToggleButton();
 
+    FCToggleButton withLabel = new FCToggleButton("Notifications");
+
+    FCToggleButton withLabelAndInitialValue = new FCToggleButton("Dark mode", true)
+        .setLeftLabel("Off")
+        .setRightLabel("On");
+
     FCToggleButton withLeftLabel = new FCToggleButton()
         .setLeftLabel("Off");
 
@@ -80,6 +86,8 @@ public class FCToggleButtonDemo extends Div {
     add(new VerticalLayout(
         new H3("Basic"),
         basic,
+        new H3("With field label"),
+        new HorizontalLayout(withLabel, withLabelAndInitialValue),
         new H3("With labels"),
         new HorizontalLayout(withLeftLabel, withRightLabel, withBothLabels),
         new H3("With icons"),
