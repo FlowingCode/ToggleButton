@@ -24,17 +24,33 @@ import com.vaadin.flow.component.shared.ThemeVariant;
 /**
  * Theme variants for the {@link FCToggleButton} component.
  *
+ * <p>Size variants ({@link #SMALL}, {@link #MEDIUM}, {@link #LARGE}) and {@link #LONGSWIPE} can be
+ * combined (e.g. {@code LONGSWIPE} + {@code LARGE}).
+ *
  * @since 1.0.0
  */
 public enum FCToggleButtonVariant implements ThemeVariant {
+    /** Renders the toggle at a smaller size (32×18 px track). */
     SMALL("small"),
+    /** Renders the toggle at the default medium size (44×24 px track). */
     MEDIUM("medium"),
+    /** Renders the toggle at a larger size (56×32 px track). */
     LARGE("large"),
+    /**
+     * Renders a wider switch track optimized for touch interaction. Can be combined with size
+     * variants: the track width is increased by 28 px while preserving the height of the chosen
+     * size.
+     */
     LONGSWIPE("longswipe"),
+    /** Applies the primary color to the checked state. */
     PRIMARY("primary"),
+    /** Applies the success color to the checked state. */
     SUCCESS("success"),
+    /** Applies the warning color to the checked state. */
     WARNING("warning"),
+    /** Applies the error color to the checked state. */
     ERROR("error"),
+    /** Applies the contrast color to the checked state. */
     CONTRAST("contrast");
 
     private final String variant;

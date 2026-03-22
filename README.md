@@ -14,7 +14,8 @@ A toggle button component for Vaadin Flow that supports customizable labels and 
 * Customizable left and right labels
 * Support for icons on both sides via slots
 * Optional label highlighting: active-side label uses the primary color, inactive side is dimmed
-* Theme variants: `SMALL`, `MEDIUM`, `LARGE`, `PRIMARY`, `SUCCESS`, `WARNING`, `ERROR`, `CONTRAST`
+* Theme variants: `SMALL`, `MEDIUM`, `LARGE`, `LONGSWIPE`, `PRIMARY`, `SUCCESS`, `WARNING`, `ERROR`, `CONTRAST`
+* `LONGSWIPE` variant produces a wider switch track, optimized for touch interaction; can be combined with size variants
 * Fluent API for easy configuration
 * Full integration with Vaadin's `HasValue`, `HasSize`, `HasLabel`, `HasAriaLabel`, and `HasTooltip`
 
@@ -131,6 +132,10 @@ FCToggleButton toggle = new FCToggleButton()
 // Apply theme variants
 toggle.addThemeVariants(FCToggleButtonVariant.PRIMARY);
 toggle.addThemeVariants(FCToggleButtonVariant.CONTRAST);
+
+// Long swipe: wider track, optimized for touch (can be combined with size variants)
+toggle.addThemeVariants(FCToggleButtonVariant.LONGSWIPE);
+toggle.addThemeVariants(FCToggleButtonVariant.LONGSWIPE, FCToggleButtonVariant.LARGE);
 ```
 
 ## Special configuration when using Spring
