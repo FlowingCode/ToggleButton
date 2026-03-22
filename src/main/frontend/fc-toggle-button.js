@@ -63,6 +63,22 @@ class FCToggleButton extends LitElement {
       color: var(--lumo-primary-text-color);
     }
 
+    :host([theme~="success"]) .label.active {
+      color: var(--lumo-success-text-color);
+    }
+
+    :host([theme~="error"]) .label.active {
+      color: var(--lumo-error-text-color);
+    }
+
+    :host([theme~="warning"]) .label.active {
+      color: var(--lumo-warning-text-color, #d08000);
+    }
+
+    :host([theme~="contrast"]) .label.active {
+      color: var(--lumo-contrast-color);
+    }
+
     .label.inactive {
       color: var(--lumo-secondary-text-color);
       opacity: 0.7;
