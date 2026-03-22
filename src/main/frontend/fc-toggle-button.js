@@ -213,6 +213,7 @@ class FCToggleButton extends LitElement {
     :host([theme~="large"]) .switch {
       width: 56px;
       height: 32px;
+      border-radius: 16px;
     }
 
     :host([theme~="large"]) .slider {
@@ -285,6 +286,7 @@ class FCToggleButton extends LitElement {
     :host([theme~="longswipe"][theme~="large"]) .switch {
       width: 84px;
       height: 32px;
+      border-radius: 16px;
     }
 
     :host([theme~="longswipe"][theme~="large"]) .slider {
