@@ -230,6 +230,82 @@ class FCToggleButton extends LitElement {
       font-size: var(--lumo-font-size-l, 18px);
     }
 
+    :host([theme~="longswipe"]) .switch {
+      width: 72px;
+      height: 24px;
+    }
+
+    :host([theme~="longswipe"]) .slider {
+      width: 18px;
+      height: 18px;
+      top: 3px;
+      left: 3px;
+    }
+
+    :host([theme~="longswipe"][checked]) .slider {
+      transform: translateX(48px);
+    }
+
+    :host([theme~="longswipe"]) .switch:active .slider {
+      width: 22px;
+    }
+
+    :host([theme~="longswipe"][checked]) .switch:active .slider {
+      transform: translateX(44px);
+    }
+
+    :host([theme~="longswipe"]) .label {
+      font-size: var(--lumo-font-size-s, 14px);
+    }
+
+    :host([theme~="longswipe"][theme~="small"]) .switch {
+      width: 60px;
+      height: 18px;
+    }
+
+    :host([theme~="longswipe"][theme~="small"]) .slider {
+      width: 14px;
+      height: 14px;
+      top: 2px;
+      left: 2px;
+    }
+
+    :host([theme~="longswipe"][theme~="small"][checked]) .slider {
+      transform: translateX(42px);
+    }
+
+    :host([theme~="longswipe"][theme~="small"]) .switch:active .slider {
+      width: 17px;
+    }
+
+    :host([theme~="longswipe"][theme~="small"][checked]) .switch:active .slider {
+      transform: translateX(39px);
+    }
+
+    :host([theme~="longswipe"][theme~="large"]) .switch {
+      width: 84px;
+      height: 32px;
+    }
+
+    :host([theme~="longswipe"][theme~="large"]) .slider {
+      width: 24px;
+      height: 24px;
+      top: 4px;
+      left: 4px;
+    }
+
+    :host([theme~="longswipe"][theme~="large"][checked]) .slider {
+      transform: translateX(52px);
+    }
+
+    :host([theme~="longswipe"][theme~="large"]) .switch:active .slider {
+      width: 30px;
+    }
+
+    :host([theme~="longswipe"][theme~="large"][checked]) .switch:active .slider {
+      transform: translateX(46px);
+    }
+
     /* Readonly Styles: Unify the look for both checked/unchecked and variants */
     :host([readonly]) .switch {
       background-color: var(--lumo-contrast-10pct, #f0f0f0) !important;
@@ -325,11 +401,8 @@ class FCToggleButton extends LitElement {
     const slider = this.shadowRoot.querySelector('.slider');
     const switchEl = this.shadowRoot.querySelector('.switch');
 
-    if (slider) {
-      slider.style.transition = '';
-    }
-
     if (!this._isSwiping) {
+      if (slider) slider.style.transition = '';
       this._touchStartX = null;
       this._touchStartY = null;
       return;
@@ -337,19 +410,26 @@ class FCToggleButton extends LitElement {
 
     const touch = e.changedTouches[0];
     const dx = touch.clientX - this._touchStartX;
-    const threshold = switchEl ? switchEl.offsetWidth * 0.3 : 15;
 
-    if (Math.abs(dx) >= threshold) {
-      const newChecked = dx > 0;
-      if (newChecked !== this.checked) {
-        this.checked = newChecked;
-        this._fireChange();
-      }
+    // Threshold: 50% of the slider's actual travel range
+    const sliderWidth = slider ? slider.offsetWidth : 18;
+    const gap = slider ? parseInt(getComputedStyle(slider).left) : 3;
+    const maxTranslate = switchEl ? switchEl.offsetWidth - sliderWidth - gap * 2 : 20;
+    const threshold = maxTranslate * 0.5;
+
+    const newChecked = dx > 0 ? true : false;
+    if (Math.abs(dx) >= threshold && newChecked !== this.checked) {
+      this.checked = newChecked;
+      this._fireChange();
       this._swipeHandled = true;
-    } else {
-      // Snap back — let CSS transition handle it by resetting inline transform
-      if (slider) slider.style.transform = '';
     }
+
+    // Re-enable transition, then on the next frame clear the inline transform so
+    // the CSS-driven position animates smoothly from the current mid-swipe position.
+    if (slider) slider.style.transition = '';
+    requestAnimationFrame(() => {
+      if (slider) slider.style.transform = '';
+    });
 
     this._touchStartX = null;
     this._touchStartY = null;

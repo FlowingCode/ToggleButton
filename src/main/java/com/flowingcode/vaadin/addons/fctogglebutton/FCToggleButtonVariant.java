@@ -30,6 +30,7 @@ public enum FCToggleButtonVariant implements ThemeVariant {
     SMALL("small"),
     MEDIUM("medium"),
     LARGE("large"),
+    LONGSWIPE("longswipe"),
     PRIMARY("primary"),
     SUCCESS("success"),
     WARNING("warning"),
