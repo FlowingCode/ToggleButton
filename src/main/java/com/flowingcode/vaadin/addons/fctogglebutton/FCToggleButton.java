@@ -140,8 +140,12 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
     }
 
     /**
-     * Enables label highlighting: the label on the active side is shown with the primary text color
-     * and the other with a dimmed color.
+     * Enables label highlighting: the label on the active side is shown using the color of the
+     * active theme variant ({@link FCToggleButtonVariant#PRIMARY PRIMARY},
+     * {@link FCToggleButtonVariant#SUCCESS SUCCESS}, {@link FCToggleButtonVariant#WARNING WARNING},
+     * {@link FCToggleButtonVariant#ERROR ERROR}, or {@link FCToggleButtonVariant#CONTRAST
+     * CONTRAST}), falling back to the primary color when no color variant is set. The inactive-side
+     * label is dimmed.
      *
      * @return this instance for method chaining
      * @since 1.0.0
