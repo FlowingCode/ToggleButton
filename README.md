@@ -13,6 +13,7 @@ A toggle button component for Vaadin Flow that supports customizable labels and 
 * Toggle between two states with a single click
 * Customizable left and right labels
 * Support for icons on both sides via slots
+* Optional label highlighting: active-side label uses the primary color, inactive side is dimmed
 * Theme variants: `SMALL`, `MEDIUM`, `LARGE`, `PRIMARY`, `SUCCESS`, `WARNING`, `ERROR`, `CONTRAST`
 * Fluent API for easy configuration
 * Full integration with Vaadin's `HasValue`, `HasSize`, `HasAriaLabel`, and `HasTooltip`
@@ -33,7 +34,7 @@ Add the following dependencies in your pom.xml file:
 <dependency>
    <groupId>com.flowingcode.vaadin.addons</groupId>
    <artifactId>fc-toggle-button-addon</artifactId>
-   <version>X.Y.Z</version>
+   <version>1.0.0</version>
 </dependency>
 ```
 <!-- the above dependency should be updated with latest released version information -->
@@ -114,6 +115,12 @@ FCToggleButton toggle = new FCToggleButton()
 // Listen to value changes
 toggle.addValueChangeListener(e ->
     Notification.show("Toggle is now: " + (e.getValue() ? "on" : "off")));
+
+// Enable label highlighting (active side uses primary color, inactive side is dimmed)
+FCToggleButton toggle = new FCToggleButton()
+    .setLeftLabel("Off")
+    .setRightLabel("On")
+    .withHighlightLabel();
 
 // Apply theme variants
 toggle.addThemeVariants(FCToggleButtonVariant.PRIMARY);
