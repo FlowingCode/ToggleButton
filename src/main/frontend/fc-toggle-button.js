@@ -12,7 +12,8 @@ class FCToggleButton extends LitElement {
     rightLabel: { type: String },
     disabled: { type: Boolean, reflect: true },
     readonly: { type: Boolean, reflect: true },
-    highlightLabel: { type: Boolean, reflect: true }
+    highlightLabel: { type: Boolean, reflect: true },
+    iconsInside: { type: Boolean }
   };
 
   static styles = css`
@@ -332,6 +333,7 @@ class FCToggleButton extends LitElement {
     this.disabled = false;
     this.readonly = false;
     this.highlightLabel = false;
+    this.iconsInside = false;
     this._touchStartX = null;
     this._touchStartY = null;
     this._isSwiping = false;
@@ -439,16 +441,22 @@ class FCToggleButton extends LitElement {
   }
 
   render() {
+    const leftLabelClass = this.highlightLabel && !this.checked ? 'active' : this.highlightLabel ? 'inactive' : '';
+    const rightLabelClass = this.highlightLabel && this.checked ? 'active' : this.highlightLabel ? 'inactive' : '';
+    const leftLabelEl = this.leftLabel ? html`<span class="label ${leftLabelClass}">${this.leftLabel}</span>` : '';
+    const rightLabelEl = this.rightLabel ? html`<span class="label ${rightLabelClass}">${this.rightLabel}</span>` : '';
+    const leftSlot = html`<slot name="left"></slot>`;
+    const rightSlot = html`<slot name="right"></slot>`;
     return html`
       ${this.label ? html`<span class="field-label">${this.label}</span>` : ''}
       <div class="container">
-        <slot name="left"></slot>
-        ${this.leftLabel ? html`<span class="label ${this.highlightLabel && !this.checked ? 'active' : this.highlightLabel ? 'inactive' : ''}">${this.leftLabel}</span>` : ''}
+        ${this.iconsInside ? leftLabelEl : leftSlot}
+        ${this.iconsInside ? leftSlot : leftLabelEl}
         <div class="switch">
           <div class="slider"></div>
         </div>
-        ${this.rightLabel ? html`<span class="label ${this.highlightLabel && this.checked ? 'active' : this.highlightLabel ? 'inactive' : ''}">${this.rightLabel}</span>` : ''}
-        <slot name="right"></slot>
+        ${this.iconsInside ? rightSlot : rightLabelEl}
+        ${this.iconsInside ? rightLabelEl : rightSlot}
       </div>
     `;
   }

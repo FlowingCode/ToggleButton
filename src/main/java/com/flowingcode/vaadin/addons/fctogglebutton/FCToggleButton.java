@@ -152,6 +152,33 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
     }
 
     /**
+     * Places icons adjacent to the switch and labels on the outer edges, producing the layout
+     * {@code [left-label] [left-icon] [switch] [right-icon] [right-label]}.
+     *
+     * <p>By default the order is {@code [left-icon] [left-label] [switch] [right-label]
+     * [right-icon]}.
+     *
+     * @return this instance for method chaining
+     * @since 1.0.0
+     */
+    public FCToggleButton withIconsInside() {
+        getElement().setProperty("iconsInside", true);
+        return this;
+    }
+
+    /**
+     * Restores the default layout where icons are on the outer edges and labels are adjacent to the
+     * switch: {@code [left-icon] [left-label] [switch] [right-label] [right-icon]}.
+     *
+     * @return this instance for method chaining
+     * @since 1.0.0
+     */
+    public FCToggleButton withIconsOutside() {
+        getElement().setProperty("iconsInside", false);
+        return this;
+    }
+
+    /**
      * Disables label highlighting so both labels are rendered with the same color regardless of the
      * toggle state.
      *
