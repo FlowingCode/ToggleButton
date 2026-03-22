@@ -254,17 +254,106 @@ class FCToggleButton extends LitElement {
     this.disabled = false;
     this.readonly = false;
     this.highlightLabel = false;
-    this.addEventListener('click', this._toggle);
+    this._touchStartX = null;
+    this._touchStartY = null;
+    this._isSwiping = false;
+    this._swipeHandled = false;
+    this.addEventListener('click', this._onClick.bind(this));
+    this.addEventListener('touchstart', this._onTouchStart.bind(this), { passive: true });
+    this.addEventListener('touchmove', this._onTouchMove.bind(this), { passive: false });
+    this.addEventListener('touchend', this._onTouchEnd.bind(this));
   }
 
-  _toggle(e) {
-    if (this.disabled || this.readonly) return;
-    this.checked = !this.checked;
+  _fireChange() {
     this.dispatchEvent(new CustomEvent('checked-changed', {
       detail: { value: this.checked },
       bubbles: true,
       composed: true
     }));
+  }
+
+  _onClick(e) {
+    if (this._swipeHandled) {
+      this._swipeHandled = false;
+      return;
+    }
+    if (this.disabled || this.readonly) return;
+    this.checked = !this.checked;
+    this._fireChange();
+  }
+
+  _onTouchStart(e) {
+    if (this.disabled || this.readonly) return;
+    const touch = e.touches[0];
+    this._touchStartX = touch.clientX;
+    this._touchStartY = touch.clientY;
+    this._isSwiping = false;
+    this._swipeHandled = false;
+
+    const slider = this.shadowRoot.querySelector('.slider');
+    if (slider) {
+      slider.style.transition = 'none';
+    }
+  }
+
+  _onTouchMove(e) {
+    if (this._touchStartX === null || this.disabled || this.readonly) return;
+    const touch = e.touches[0];
+    const dx = touch.clientX - this._touchStartX;
+    const dy = touch.clientY - this._touchStartY;
+
+    // Only capture horizontal swipes
+    if (!this._isSwiping && Math.abs(dx) < Math.abs(dy)) return;
+    this._isSwiping = true;
+    e.preventDefault();
+
+    const switchEl = this.shadowRoot.querySelector('.switch');
+    const slider = this.shadowRoot.querySelector('.slider');
+    if (!switchEl || !slider) return;
+
+    const switchWidth = switchEl.offsetWidth;
+    const sliderWidth = slider.offsetWidth;
+    const gap = parseInt(getComputedStyle(slider).left);
+    const maxTranslate = switchWidth - sliderWidth - gap * 2;
+    const baseTranslate = this.checked ? maxTranslate : 0;
+    const clamped = Math.max(0, Math.min(maxTranslate, baseTranslate + dx));
+    slider.style.transform = `translateX(${clamped}px)`;
+  }
+
+  _onTouchEnd(e) {
+    if (this._touchStartX === null || this.disabled || this.readonly) return;
+    const slider = this.shadowRoot.querySelector('.slider');
+    const switchEl = this.shadowRoot.querySelector('.switch');
+
+    if (slider) {
+      slider.style.transition = '';
+    }
+
+    if (!this._isSwiping) {
+      this._touchStartX = null;
+      this._touchStartY = null;
+      return;
+    }
+
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - this._touchStartX;
+    const threshold = switchEl ? switchEl.offsetWidth * 0.3 : 15;
+
+    if (Math.abs(dx) >= threshold) {
+      const newChecked = dx > 0;
+      if (newChecked !== this.checked) {
+        this.checked = newChecked;
+        this._fireChange();
+      }
+      this._swipeHandled = true;
+    } else {
+      // Snap back — let CSS transition handle it by resetting inline transform
+      if (slider) slider.style.transform = '';
+    }
+
+    this._touchStartX = null;
+    this._touchStartY = null;
+    this._isSwiping = false;
   }
 
   render() {
