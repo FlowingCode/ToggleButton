@@ -23,6 +23,7 @@ import com.vaadin.flow.component.AbstractSinglePropertyField;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasAriaLabel;
 import com.vaadin.flow.component.HasComponents;
+import com.vaadin.flow.component.HasLabel;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.Tag;
@@ -46,6 +47,7 @@ import com.vaadin.flow.component.shared.Tooltip;
 public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, Boolean>
     implements HasSize,
         HasComponents,
+        HasLabel,
         HasAriaLabel,
         HasTooltip,
         HasThemeVariant<FCToggleButtonVariant> {
@@ -61,6 +63,7 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * Creates a new toggle button with the given initial value.
      *
      * @param initialValue the initial checked state
+     * @since 1.0.0
      */
     public FCToggleButton(boolean initialValue) {
         super("checked", initialValue, false);
@@ -68,6 +71,29 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
             getElement().setAttribute("checked", "");
         }
         setSynchronizedEvent("checked-changed");
+    }
+
+    /**
+     * Creates a new toggle button with the given label and an initial value of {@code false}.
+     *
+     * @param label the label text shown above the toggle
+     * @since 1.0.0
+     */
+    public FCToggleButton(String label) {
+        this(false);
+        setLabel(label);
+    }
+
+    /**
+     * Creates a new toggle button with the given label and initial value.
+     *
+     * @param label the label text shown above the toggle
+     * @param initialValue the initial checked state
+     * @since 1.0.0
+     */
+    public FCToggleButton(String label, boolean initialValue) {
+        this(initialValue);
+        setLabel(label);
     }
 
     @Override

@@ -7,6 +7,7 @@ import { LitElement, html, css } from 'lit';
 class FCToggleButton extends LitElement {
   static properties = {
     checked: { type: Boolean, reflect: true },
+    label: { type: String },
     leftLabel: { type: String },
     rightLabel: { type: String },
     disabled: { type: Boolean, reflect: true },
@@ -17,13 +18,21 @@ class FCToggleButton extends LitElement {
   static styles = css`
     :host {
       display: inline-flex;
-      align-items: center;
-      gap: var(--lumo-space-s, 8px);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--lumo-space-xs, 4px);
       font-family: var(--lumo-font-family);
       color: var(--lumo-body-text-color);
       cursor: pointer;
       user-select: none;
       transition: opacity 0.2s;
+    }
+
+    .field-label {
+      font-size: var(--lumo-font-size-s, 14px);
+      font-weight: 500;
+      color: var(--lumo-secondary-text-color);
+      line-height: 1;
     }
 
     :host([disabled]) {
@@ -239,6 +248,7 @@ class FCToggleButton extends LitElement {
   constructor() {
     super();
     this.checked = false;
+    this.label = '';
     this.leftLabel = '';
     this.rightLabel = '';
     this.disabled = false;
@@ -259,6 +269,7 @@ class FCToggleButton extends LitElement {
 
   render() {
     return html`
+      ${this.label ? html`<span class="field-label">${this.label}</span>` : ''}
       <div class="container">
         <slot name="left"></slot>
         ${this.leftLabel ? html`<span class="label ${this.highlightLabel && !this.checked ? 'active' : this.highlightLabel ? 'inactive' : ''}">${this.leftLabel}</span>` : ''}
