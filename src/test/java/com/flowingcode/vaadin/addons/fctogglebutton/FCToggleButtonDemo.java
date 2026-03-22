@@ -78,23 +78,26 @@ public class FCToggleButtonDemo extends Div {
         .setRightIcon(new Icon(VaadinIcon.SUN_O))
         .withIconsInside();
 
-    FCToggleButton highlightLabels = new FCToggleButton()
-        .setLeftLabel("Off")
-        .setRightLabel("On")
-        .withHighlightLabel();
+    FCToggleButton highlightPrimary = new FCToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
+    highlightPrimary.addThemeVariants(FCToggleButtonVariant.PRIMARY);
 
-    FCToggleButton highlightWithIcons = new FCToggleButton()
-        .setLeftIcon(new Icon(VaadinIcon.MOON))
-        .setLeftLabel("Dark")
-        .setRightLabel("Light")
-        .setRightIcon(new Icon(VaadinIcon.SUN_O))
-        .withHighlightLabel();
+    FCToggleButton highlightSuccess = new FCToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
+    highlightSuccess.addThemeVariants(FCToggleButtonVariant.SUCCESS);
+
+    FCToggleButton highlightWarning = new FCToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
+    highlightWarning.addThemeVariants(FCToggleButtonVariant.WARNING);
+
+    FCToggleButton highlightError = new FCToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
+    highlightError.addThemeVariants(FCToggleButtonVariant.ERROR);
+
+    FCToggleButton highlightContrast = new FCToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
+    highlightContrast.addThemeVariants(FCToggleButtonVariant.CONTRAST);
 
     HorizontalLayout fieldLabelRow = new HorizontalLayout(withLabel, withLabelAndInitialValue);
     HorizontalLayout labelsRow = new HorizontalLayout(withLeftLabel, withRightLabel, withBothLabels);
     HorizontalLayout iconsRow = new HorizontalLayout(withLeftIcon, withRightIcon, withBothIcons);
     HorizontalLayout labelsAndIconsRow = new HorizontalLayout(withLabelsAndIcons, withIconsInside);
-    HorizontalLayout highlightRow = new HorizontalLayout(highlightLabels, highlightWithIcons);
+    HorizontalLayout highlightRow = new HorizontalLayout(highlightPrimary, highlightSuccess, highlightWarning, highlightError, highlightContrast);
     fieldLabelRow.getStyle().set("gap", "var(--lumo-space-l)");
     labelsRow.getStyle().set("gap", "var(--lumo-space-l)");
     iconsRow.getStyle().set("gap", "var(--lumo-space-l)");
