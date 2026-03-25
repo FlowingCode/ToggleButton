@@ -1,6 +1,6 @@
 /*-
  * #%L
- * FC Toggle Button Add-On
+ * Toggle Button Add-On
  * %%
  * Copyright (C) 2026 Flowing Code
  * %%
@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.fctogglebutton.it;
+package com.flowingcode.vaadin.addons.togglebutton.it;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -57,7 +57,7 @@ public class ViewIT extends AbstractViewTest {
 
   @Test
   public void componentWorks() {
-    TestBenchElement element = $("fc-toggle-button").first();
+    TestBenchElement element = $("toggle-button").first();
     assertThat(element, hasBeenUpgradedToCustomElement);
   }
 }

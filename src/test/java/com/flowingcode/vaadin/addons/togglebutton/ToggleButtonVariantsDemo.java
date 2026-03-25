@@ -1,6 +1,6 @@
 /*-
  * #%L
- * FC Toggle Button Add-On
+ * Toggle Button Add-On
  * %%
  * Copyright (C) 2026 Flowing Code
  * %%
@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.fctogglebutton;
+package com.flowingcode.vaadin.addons.togglebutton;
 
 import com.flowingcode.vaadin.addons.demo.DemoSource;
 import com.vaadin.flow.component.html.Div;
@@ -30,52 +30,52 @@ import com.vaadin.flow.router.Route;
 @DemoSource
 @PageTitle("Theme Variants")
 @SuppressWarnings("serial")
-@Route(value = "variants", layout = FCToggleButtonDemoView.class)
-public class FCToggleButtonVariantsDemo extends Div {
+@Route(value = "variants", layout = ToggleButtonDemoView.class)
+public class ToggleButtonVariantsDemo extends Div {
 
-  public FCToggleButtonVariantsDemo() {
+  public ToggleButtonVariantsDemo() {
 
     // Color variants
-    FCToggleButton primary = new FCToggleButton(true).setLeftLabel("Primary");
-    primary.addThemeVariants(FCToggleButtonVariant.PRIMARY);
+    ToggleButton primary = new ToggleButton(true).setLeftLabel("Primary");
+    primary.addThemeVariants(ToggleButtonVariant.PRIMARY);
 
-    FCToggleButton success = new FCToggleButton(true).setLeftLabel("Success");
-    success.addThemeVariants(FCToggleButtonVariant.SUCCESS);
+    ToggleButton success = new ToggleButton(true).setLeftLabel("Success");
+    success.addThemeVariants(ToggleButtonVariant.SUCCESS);
 
-    FCToggleButton error = new FCToggleButton(true).setLeftLabel("Error");
-    error.addThemeVariants(FCToggleButtonVariant.ERROR);
+    ToggleButton error = new ToggleButton(true).setLeftLabel("Error");
+    error.addThemeVariants(ToggleButtonVariant.ERROR);
 
-    FCToggleButton warning = new FCToggleButton(true).setLeftLabel("Warning");
-    warning.addThemeVariants(FCToggleButtonVariant.WARNING);
+    ToggleButton warning = new ToggleButton(true).setLeftLabel("Warning");
+    warning.addThemeVariants(ToggleButtonVariant.WARNING);
 
-    FCToggleButton contrast = new FCToggleButton(true).setLeftLabel("Contrast");
-    contrast.addThemeVariants(FCToggleButtonVariant.CONTRAST);
+    ToggleButton contrast = new ToggleButton(true).setLeftLabel("Contrast");
+    contrast.addThemeVariants(ToggleButtonVariant.CONTRAST);
 
     // Size variants
-    FCToggleButton small = new FCToggleButton().setRightLabel("Small");
-    small.addThemeVariants(FCToggleButtonVariant.SMALL);
+    ToggleButton small = new ToggleButton().setRightLabel("Small");
+    small.addThemeVariants(ToggleButtonVariant.SMALL);
 
-    FCToggleButton medium = new FCToggleButton().setRightLabel("Medium");
-    medium.addThemeVariants(FCToggleButtonVariant.MEDIUM);
+    ToggleButton medium = new ToggleButton().setRightLabel("Medium");
+    medium.addThemeVariants(ToggleButtonVariant.MEDIUM);
 
-    FCToggleButton large = new FCToggleButton().setRightLabel("Large");
-    large.addThemeVariants(FCToggleButtonVariant.LARGE);
+    ToggleButton large = new ToggleButton().setRightLabel("Large");
+    large.addThemeVariants(ToggleButtonVariant.LARGE);
 
     // Long swipe variants
-    FCToggleButton longswipeSmall = new FCToggleButton().setRightLabel("Small");
-    longswipeSmall.addThemeVariants(FCToggleButtonVariant.LONGSWIPE, FCToggleButtonVariant.SMALL);
+    ToggleButton longswipeSmall = new ToggleButton().setRightLabel("Small");
+    longswipeSmall.addThemeVariants(ToggleButtonVariant.LONGSWIPE, ToggleButtonVariant.SMALL);
 
-    FCToggleButton longswipeMedium = new FCToggleButton().setRightLabel("Medium");
-    longswipeMedium.addThemeVariants(FCToggleButtonVariant.LONGSWIPE, FCToggleButtonVariant.MEDIUM);
+    ToggleButton longswipeMedium = new ToggleButton().setRightLabel("Medium");
+    longswipeMedium.addThemeVariants(ToggleButtonVariant.LONGSWIPE, ToggleButtonVariant.MEDIUM);
 
-    FCToggleButton longswipeLarge = new FCToggleButton().setRightLabel("Large");
-    longswipeLarge.addThemeVariants(FCToggleButtonVariant.LONGSWIPE, FCToggleButtonVariant.LARGE);
+    ToggleButton longswipeLarge = new ToggleButton().setRightLabel("Large");
+    longswipeLarge.addThemeVariants(ToggleButtonVariant.LONGSWIPE, ToggleButtonVariant.LARGE);
 
     // States
-    FCToggleButton disabled = new FCToggleButton().setRightLabel("Disabled");
+    ToggleButton disabled = new ToggleButton().setRightLabel("Disabled");
     disabled.setEnabled(false);
 
-    FCToggleButton readOnly = new FCToggleButton(true).setRightLabel("Read-only");
+    ToggleButton readOnly = new ToggleButton(true).setRightLabel("Read-only");
     readOnly.setReadOnly(true);
 
     HorizontalLayout colorRow = new HorizontalLayout(primary, success, error, warning, contrast);

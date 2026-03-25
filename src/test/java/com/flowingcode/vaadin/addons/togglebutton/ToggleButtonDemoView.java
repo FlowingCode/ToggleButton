@@ -1,6 +1,6 @@
 /*-
  * #%L
- * FC Toggle Button Add-On
+ * Toggle Button Add-On
  * %%
  * Copyright (C) 2026 Flowing Code
  * %%
@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.fctogglebutton;
+package com.flowingcode.vaadin.addons.togglebutton;
 
 import com.flowingcode.vaadin.addons.DemoLayout;
 import com.flowingcode.vaadin.addons.GithubLink;
@@ -27,14 +27,14 @@ import com.vaadin.flow.router.Route;
 
 @SuppressWarnings("serial")
 @ParentLayout(DemoLayout.class)
-@Route("fctogglebutton")
-@GithubLink("https://github.com/FlowingCode/FCToggleButton")
-public class FCToggleButtonDemoView extends TabbedDemo {
+@Route("togglebutton")
+@GithubLink("https://github.com/FlowingCode/ToggleButton")
+public class ToggleButtonDemoView extends TabbedDemo {
 
-  public FCToggleButtonDemoView() {
-    addDemo(FCToggleButtonDemo.class);
-    addDemo(FCToggleButtonVariantsDemo.class);
-    addDemo(FCToggleButtonEventsDemo.class);
+  public ToggleButtonDemoView() {
+    addDemo(ToggleButtonDemo.class);
+    addDemo(ToggleButtonVariantsDemo.class);
+    addDemo(ToggleButtonEventsDemo.class);
     setSizeFull();
   }
 }

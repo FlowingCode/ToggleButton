@@ -1,6 +1,6 @@
 /*-
  * #%L
- * FC Toggle Button Add-On
+ * Toggle Button Add-On
  * %%
  * Copyright (C) 2026 Flowing Code
  * %%
@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.fctogglebutton.it;
+package com.flowingcode.vaadin.addons.togglebutton.it;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -27,7 +27,7 @@ import com.vaadin.testbench.TestBenchElement;
 import org.junit.Test;
 
 /**
- * Integration tests for {@code FCToggleButton} label and value-change behavior.
+ * Integration tests for {@code ToggleButton} label and value-change behavior.
  *
  * <p>Tests navigate to the "Labels and Icons" demo (route {@code labels}).
  * Component index mapping:
@@ -44,14 +44,14 @@ import org.junit.Test;
  *   <li>highlightWithIcons (withHighlightLabel)</li>
  * </ol>
  */
-public class FCToggleButtonIT extends AbstractViewTest {
+public class ToggleButtonIT extends AbstractViewTest {
 
-  public FCToggleButtonIT() {
+  public ToggleButtonIT() {
     super("labels");
   }
 
   private TestBenchElement getToggle(int index) {
-    return $("fc-toggle-button").get(index);
+    return $("toggle-button").get(index);
   }
 
   @Test

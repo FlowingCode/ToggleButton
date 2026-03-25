@@ -1,6 +1,6 @@
 /*-
  * #%L
- * FC Toggle Button Add-On
+ * Toggle Button Add-On
  * %%
  * Copyright (C) 2026 Flowing Code
  * %%
@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.fctogglebutton.it;
+package com.flowingcode.vaadin.addons.togglebutton.it;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -27,7 +27,7 @@ import com.vaadin.testbench.TestBenchElement;
 import org.junit.Test;
 
 /**
- * Integration tests for {@code FCToggleButton} theme variants and component states.
+ * Integration tests for {@code ToggleButton} theme variants and component states.
  *
  * <p>Tests navigate to the "Theme Variants" demo (route {@code variants}).
  * Component index mapping:
@@ -44,14 +44,14 @@ import org.junit.Test;
  *   <li>readOnly (checked=true, readonly)</li>
  * </ol>
  */
-public class FCToggleButtonVariantsIT extends AbstractViewTest {
+public class ToggleButtonVariantsIT extends AbstractViewTest {
 
-  public FCToggleButtonVariantsIT() {
+  public ToggleButtonVariantsIT() {
     super("variants");
   }
 
   private TestBenchElement getToggle(int index) {
-    return $("fc-toggle-button").get(index);
+    return $("toggle-button").get(index);
   }
 
   // --- Color variants ---

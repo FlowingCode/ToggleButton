@@ -1,6 +1,6 @@
 /*-
  * #%L
- * FC Toggle Button Add-On
+ * Toggle Button Add-On
  * %%
  * Copyright (C) 2026 Flowing Code
  * %%
@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.fctogglebutton.it;
+package com.flowingcode.vaadin.addons.togglebutton.it;
 
 import com.vaadin.testbench.ScreenshotOnFailureRule;
 import com.vaadin.testbench.TestBench;

@@ -1,6 +1,6 @@
 /*-
  * #%L
- * FC Toggle Button Add-On
+ * Toggle Button Add-On
  * %%
  * Copyright (C) 2026 Flowing Code
  * %%
@@ -17,9 +17,9 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.fctogglebutton.test;
+package com.flowingcode.vaadin.addons.togglebutton.test;
 
-import com.flowingcode.vaadin.addons.fctogglebutton.FCToggleButton;
+import com.flowingcode.vaadin.addons.togglebutton.ToggleButton;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class SerializationTest {
   @Test
   public void testSerialization() throws ClassNotFoundException, IOException {
     try {
-      testSerializationOf(new FCToggleButton());
+      testSerializationOf(new ToggleButton());
     } catch (Exception e) {
       Assert.fail("Problem while testing serialization: " + e.getMessage());
     }

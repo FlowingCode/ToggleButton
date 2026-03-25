@@ -1,6 +1,6 @@
 /*-
  * #%L
- * FC Toggle Button Add-On
+ * Toggle Button Add-On
  * %%
  * Copyright (C) 2026 Flowing Code
  * %%
@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.fctogglebutton;
+package com.flowingcode.vaadin.addons.togglebutton;
 
 import com.flowingcode.vaadin.addons.demo.DemoSource;
 import com.vaadin.flow.component.html.Div;
@@ -30,23 +30,23 @@ import com.vaadin.flow.router.Route;
 @DemoSource
 @PageTitle("Events and Accessibility")
 @SuppressWarnings("serial")
-@Route(value = "events", layout = FCToggleButtonDemoView.class)
-public class FCToggleButtonEventsDemo extends Div {
+@Route(value = "events", layout = ToggleButtonDemoView.class)
+public class ToggleButtonEventsDemo extends Div {
 
-  public FCToggleButtonEventsDemo() {
+  public ToggleButtonEventsDemo() {
 
-    FCToggleButton withValueChange = new FCToggleButton()
+    ToggleButton withValueChange = new ToggleButton()
         .setLeftLabel("Off")
         .setRightLabel("On");
     withValueChange.addValueChangeListener(e ->
         Notification.show("Value changed to: " + e.getValue()));
 
-    FCToggleButton withAriaLabel = new FCToggleButton()
+    ToggleButton withAriaLabel = new ToggleButton()
         .setLeftLabel("Off")
         .setRightLabel("On");
     withAriaLabel.setAriaLabel("Enable notifications");
 
-    FCToggleButton withTooltip = new FCToggleButton()
+    ToggleButton withTooltip = new ToggleButton()
         .setLeftLabel("Off")
         .setRightLabel("On");
     withTooltip.setTooltipText("Toggle to enable or disable this feature");

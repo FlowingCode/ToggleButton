@@ -4,7 +4,7 @@ import { LitElement, html, css } from 'lit';
  * Custom Toggle Button component.
  * Supports left and right labels, and is fully stylable.
  */
-class FCToggleButton extends LitElement {
+class ToggleButton extends LitElement {
   static properties = {
     checked: { type: Boolean, reflect: true },
     label: { type: String },
@@ -478,5 +478,5 @@ class FCToggleButton extends LitElement {
   }
 }
 
-customElements.define('fc-toggle-button', FCToggleButton);
-export { FCToggleButton };
+customElements.define('toggle-button', ToggleButton);
+export { ToggleButton };

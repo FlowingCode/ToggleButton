@@ -1,6 +1,6 @@
 /*-
  * #%L
- * FC Toggle Button Add-On
+ * Toggle Button Add-On
  * %%
  * Copyright (C) 2026 Flowing Code
  * %%
@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.fctogglebutton;
+package com.flowingcode.vaadin.addons.togglebutton;
 
 import com.flowingcode.vaadin.addons.demo.DemoSource;
 import com.vaadin.flow.component.html.Div;
@@ -32,66 +32,66 @@ import com.vaadin.flow.router.Route;
 @DemoSource
 @PageTitle("Labels and Icons")
 @SuppressWarnings("serial")
-@Route(value = "labels", layout = FCToggleButtonDemoView.class)
-public class FCToggleButtonDemo extends Div {
+@Route(value = "labels", layout = ToggleButtonDemoView.class)
+public class ToggleButtonDemo extends Div {
 
-  public FCToggleButtonDemo() {
+  public ToggleButtonDemo() {
 
-    FCToggleButton basic = new FCToggleButton();
+    ToggleButton basic = new ToggleButton();
 
-    FCToggleButton withLabel = new FCToggleButton("Notifications");
+    ToggleButton withLabel = new ToggleButton("Notifications");
 
-    FCToggleButton withLabelAndInitialValue = new FCToggleButton("Dark mode", true)
+    ToggleButton withLabelAndInitialValue = new ToggleButton("Dark mode", true)
         .setLeftLabel("Off")
         .setRightLabel("On");
 
-    FCToggleButton withLeftLabel = new FCToggleButton()
+    ToggleButton withLeftLabel = new ToggleButton()
         .setLeftLabel("Off");
 
-    FCToggleButton withRightLabel = new FCToggleButton()
+    ToggleButton withRightLabel = new ToggleButton()
         .setRightLabel("On");
 
-    FCToggleButton withBothLabels = new FCToggleButton()
+    ToggleButton withBothLabels = new ToggleButton()
         .setLeftLabel("Off")
         .setRightLabel("On");
 
-    FCToggleButton withLeftIcon = new FCToggleButton()
+    ToggleButton withLeftIcon = new ToggleButton()
         .setLeftIcon(new Icon(VaadinIcon.MOON));
 
-    FCToggleButton withRightIcon = new FCToggleButton()
+    ToggleButton withRightIcon = new ToggleButton()
         .setRightIcon(new Icon(VaadinIcon.SUN_O));
 
-    FCToggleButton withBothIcons = new FCToggleButton()
+    ToggleButton withBothIcons = new ToggleButton()
         .setLeftIcon(new Icon(VaadinIcon.MOON))
         .setRightIcon(new Icon(VaadinIcon.SUN_O));
 
-    FCToggleButton withLabelsAndIcons = new FCToggleButton()
+    ToggleButton withLabelsAndIcons = new ToggleButton()
         .setLeftIcon(new Icon(VaadinIcon.MOON))
         .setLeftLabel("Dark")
         .setRightLabel("Light")
         .setRightIcon(new Icon(VaadinIcon.SUN_O));
 
-    FCToggleButton withIconsInside = new FCToggleButton()
+    ToggleButton withIconsInside = new ToggleButton()
         .setLeftIcon(new Icon(VaadinIcon.MOON))
         .setLeftLabel("Dark")
         .setRightLabel("Light")
         .setRightIcon(new Icon(VaadinIcon.SUN_O))
         .withIconsInside();
 
-    FCToggleButton highlightPrimary = new FCToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
-    highlightPrimary.addThemeVariants(FCToggleButtonVariant.PRIMARY);
+    ToggleButton highlightPrimary = new ToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
+    highlightPrimary.addThemeVariants(ToggleButtonVariant.PRIMARY);
 
-    FCToggleButton highlightSuccess = new FCToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
-    highlightSuccess.addThemeVariants(FCToggleButtonVariant.SUCCESS);
+    ToggleButton highlightSuccess = new ToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
+    highlightSuccess.addThemeVariants(ToggleButtonVariant.SUCCESS);
 
-    FCToggleButton highlightWarning = new FCToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
-    highlightWarning.addThemeVariants(FCToggleButtonVariant.WARNING);
+    ToggleButton highlightWarning = new ToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
+    highlightWarning.addThemeVariants(ToggleButtonVariant.WARNING);
 
-    FCToggleButton highlightError = new FCToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
-    highlightError.addThemeVariants(FCToggleButtonVariant.ERROR);
+    ToggleButton highlightError = new ToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
+    highlightError.addThemeVariants(ToggleButtonVariant.ERROR);
 
-    FCToggleButton highlightContrast = new FCToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
-    highlightContrast.addThemeVariants(FCToggleButtonVariant.CONTRAST);
+    ToggleButton highlightContrast = new ToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
+    highlightContrast.addThemeVariants(ToggleButtonVariant.CONTRAST);
 
     HorizontalLayout fieldLabelRow = new HorizontalLayout(withLabel, withLabelAndInitialValue);
     HorizontalLayout labelsRow = new HorizontalLayout(withLeftLabel, withRightLabel, withBothLabels);

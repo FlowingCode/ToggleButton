@@ -1,15 +1,15 @@
 /*-
  * #%L
- * FC Toggle Button Add-On
+ * Toggle Button Add-On
  * %%
  * Copyright (C) 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.fctogglebutton;
+package com.flowingcode.vaadin.addons.togglebutton;
 
 import com.vaadin.flow.component.AbstractSinglePropertyField;
 import com.vaadin.flow.component.Component;
@@ -41,21 +41,21 @@ import com.vaadin.flow.component.shared.Tooltip;
  *
  * @since 1.0.0
  */
-@Tag("fc-toggle-button")
-@JsModule("./fc-toggle-button.js")
+@Tag("toggle-button")
+@JsModule("./toggle-button.js")
 @NpmPackage(value = "lit", version = "3.3.2")
-public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, Boolean>
+public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Boolean>
     implements HasSize,
         HasComponents,
         HasLabel,
         HasAriaLabel,
         HasTooltip,
-        HasThemeVariant<FCToggleButtonVariant> {
+        HasThemeVariant<ToggleButtonVariant> {
 
     private ItemLabelGenerator<Boolean> itemLabelGenerator = b -> "";
 
     /** Creates a new toggle button with an initial value of {@code false}. */
-    public FCToggleButton() {
+    public ToggleButton() {
         this(false);
     }
 
@@ -65,7 +65,7 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * @param initialValue the initial checked state
      * @since 1.0.0
      */
-    public FCToggleButton(boolean initialValue) {
+    public ToggleButton(boolean initialValue) {
         super("checked", initialValue, false);
         if (initialValue) {
             getElement().setAttribute("checked", "");
@@ -79,7 +79,7 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * @param label the label text shown above the toggle
      * @since 1.0.0
      */
-    public FCToggleButton(String label) {
+    public ToggleButton(String label) {
         this(false);
         setLabel(label);
     }
@@ -91,7 +91,7 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * @param initialValue the initial checked state
      * @since 1.0.0
      */
-    public FCToggleButton(String label, boolean initialValue) {
+    public ToggleButton(String label, boolean initialValue) {
         this(initialValue);
         setLabel(label);
     }
@@ -122,7 +122,7 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * @return this instance for method chaining
      * @since 1.0.0
      */
-    public FCToggleButton setItemLabelGenerator(ItemLabelGenerator<Boolean> itemLabelGenerator) {
+    public ToggleButton setItemLabelGenerator(ItemLabelGenerator<Boolean> itemLabelGenerator) {
         this.itemLabelGenerator = itemLabelGenerator;
         updateLabels();
         return this;
@@ -141,16 +141,16 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
 
     /**
      * Enables label highlighting: the label on the active side is shown using the color of the
-     * active theme variant ({@link FCToggleButtonVariant#PRIMARY PRIMARY},
-     * {@link FCToggleButtonVariant#SUCCESS SUCCESS}, {@link FCToggleButtonVariant#WARNING WARNING},
-     * {@link FCToggleButtonVariant#ERROR ERROR}, or {@link FCToggleButtonVariant#CONTRAST
+     * active theme variant ({@link ToggleButtonVariant#PRIMARY PRIMARY},
+     * {@link ToggleButtonVariant#SUCCESS SUCCESS}, {@link ToggleButtonVariant#WARNING WARNING},
+     * {@link ToggleButtonVariant#ERROR ERROR}, or {@link ToggleButtonVariant#CONTRAST
      * CONTRAST}), falling back to the primary color when no color variant is set. The inactive-side
      * label is dimmed.
      *
      * @return this instance for method chaining
      * @since 1.0.0
      */
-    public FCToggleButton withHighlightLabel() {
+    public ToggleButton withHighlightLabel() {
         getElement().setProperty("highlightLabel", true);
         return this;
     }
@@ -165,7 +165,7 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * @return this instance for method chaining
      * @since 1.0.0
      */
-    public FCToggleButton withIconsInside() {
+    public ToggleButton withIconsInside() {
         getElement().setProperty("iconsInside", true);
         return this;
     }
@@ -177,7 +177,7 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * @return this instance for method chaining
      * @since 1.0.0
      */
-    public FCToggleButton withIconsOutside() {
+    public ToggleButton withIconsOutside() {
         getElement().setProperty("iconsInside", false);
         return this;
     }
@@ -189,7 +189,7 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * @return this instance for method chaining
      * @since 1.0.0
      */
-    public FCToggleButton withoutHighlightLabel() {
+    public ToggleButton withoutHighlightLabel() {
         getElement().setProperty("highlightLabel", false);
         return this;
     }
@@ -201,7 +201,7 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * @return this instance for method chaining
      * @since 1.0.0
      */
-    public FCToggleButton setLeftLabel(String label) {
+    public ToggleButton setLeftLabel(String label) {
         getElement().setProperty("leftLabel", label);
         return this;
     }
@@ -213,7 +213,7 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * @return this instance for method chaining
      * @since 1.0.0
      */
-    public FCToggleButton setRightLabel(String label) {
+    public ToggleButton setRightLabel(String label) {
         getElement().setProperty("rightLabel", label);
         return this;
     }
@@ -225,7 +225,7 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * @return this instance for method chaining
      * @since 1.0.0
      */
-    public FCToggleButton setLeftIcon(Component icon) {
+    public ToggleButton setLeftIcon(Component icon) {
         icon.getElement().setAttribute("slot", "left");
         add(icon);
         return this;
@@ -238,7 +238,7 @@ public class FCToggleButton extends AbstractSinglePropertyField<FCToggleButton, 
      * @return this instance for method chaining
      * @since 1.0.0
      */
-    public FCToggleButton setRightIcon(Component icon) {
+    public ToggleButton setRightIcon(Component icon) {
         icon.getElement().setAttribute("slot", "right");
         add(icon);
         return this;
