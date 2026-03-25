@@ -1,10 +1,10 @@
-[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/fc-toggle-button-addon)
-[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/fc-toggle-button-addon.svg)](https://vaadin.com/directory/component/fc-toggle-button-addon)
-[![Build Status](https://jenkins.flowingcode.com/job/fc-toggle-button-addon/badge/icon)](https://jenkins.flowingcode.com/job/fc-toggle-button-addon)
-[![Maven Central](https://img.shields.io/maven-central/v/com.flowingcode.vaadin.addons/fc-toggle-button-addon)](https://mvnrepository.com/artifact/com.flowingcode.vaadin.addons/fc-toggle-button-addon)
-[![Javadoc](https://img.shields.io/badge/javadoc-00b4f0)](https://javadoc.flowingcode.com/artifact/com.flowingcode.vaadin.addons/fc-toggle-button-addon)
+[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/toggle-button-addon)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/toggle-button-addon.svg)](https://vaadin.com/directory/component/toggle-button-addon)
+[![Build Status](https://jenkins.flowingcode.com/job/toggle-button-addon/badge/icon)](https://jenkins.flowingcode.com/job/toggle-button-addon)
+[![Maven Central](https://img.shields.io/maven-central/v/com.flowingcode.vaadin.addons/toggle-button-addon)](https://mvnrepository.com/artifact/com.flowingcode.vaadin.addons/toggle-button-addon)
+[![Javadoc](https://img.shields.io/badge/javadoc-00b4f0)](https://javadoc.flowingcode.com/artifact/com.flowingcode.vaadin.addons/toggle-button-addon)
 
-# FC Toggle Button Add-On
+# Toggle Button Add-On
 
 A toggle button component for Vaadin Flow that supports customizable labels and icons on both sides of the toggle.
 
@@ -22,11 +22,11 @@ A toggle button component for Vaadin Flow that supports customizable labels and 
 
 ## Online demo
 
-[Online demo here](http://addonsv24.flowingcode.com/fctogglebutton)
+[Online demo here](http://addonsv24.flowingcode.com/togglebutton)
 
 ## Download release
 
-[Available in Vaadin Directory](https://vaadin.com/directory/component/fc-toggle-button-addon)
+[Available in Vaadin Directory](https://vaadin.com/directory/component/toggle-button-addon)
 
 ### Maven install
 
@@ -35,7 +35,7 @@ Add the following dependencies in your pom.xml file:
 ```xml
 <dependency>
    <groupId>com.flowingcode.vaadin.addons</groupId>
-   <artifactId>fc-toggle-button-addon</artifactId>
+   <artifactId>toggle-button-addon</artifactId>
    <version>1.0.0</version>
 </dependency>
 ```
@@ -52,7 +52,7 @@ To see the demo, navigate to http://localhost:8080/
 
 ## Release notes
 
-See [here](https://github.com/FlowingCode/FCToggleButton/releases)
+See [here](https://github.com/FlowingCode/ToggleButton/releases)
 
 ## Issue tracking
 
@@ -92,7 +92,7 @@ Then, follow these steps for creating a contribution:
 
 This add-on is distributed under Apache License 2.0. For license terms, see LICENSE.txt.
 
-FC Toggle Button Add-On is written by Flowing Code S.A.
+Toggle Button Add-On is written by Flowing Code S.A.
 
 # Developer Guide
 
@@ -100,21 +100,21 @@ FC Toggle Button Add-On is written by Flowing Code S.A.
 
 ```java
 // Basic toggle button
-FCToggleButton toggle = new FCToggleButton();
+ToggleButton toggle = new ToggleButton();
 
 // With a field label (shown above the toggle)
-FCToggleButton toggle = new FCToggleButton("Notifications");
+ToggleButton toggle = new ToggleButton("Notifications");
 
 // With a field label and initial value
-FCToggleButton toggle = new FCToggleButton("Dark mode", true);
+ToggleButton toggle = new ToggleButton("Dark mode", true);
 
 // With labels
-FCToggleButton toggle = new FCToggleButton()
+ToggleButton toggle = new ToggleButton()
     .setLeftLabel("Off")
     .setRightLabel("On");
 
 // With icons
-FCToggleButton toggle = new FCToggleButton()
+ToggleButton toggle = new ToggleButton()
     .setLeftLabel("Dark")
     .setRightLabel("Light")
     .setLeftIcon(new Icon(VaadinIcon.MOON))
@@ -125,13 +125,13 @@ toggle.addValueChangeListener(e ->
     Notification.show("Toggle is now: " + (e.getValue() ? "on" : "off")));
 
 // Enable label highlighting (active side uses the theme variant color, inactive side is dimmed)
-FCToggleButton toggle = new FCToggleButton()
+ToggleButton toggle = new ToggleButton()
     .setLeftLabel("Off")
     .setRightLabel("On")
     .withHighlightLabel();
 
 // Icons inside: [label] [icon] [switch] [icon] [label] (default is [icon] [label] [switch] [label] [icon])
-FCToggleButton toggle = new FCToggleButton()
+ToggleButton toggle = new ToggleButton()
     .setLeftIcon(new Icon(VaadinIcon.MOON))
     .setLeftLabel("Dark")
     .setRightLabel("Light")
@@ -139,12 +139,12 @@ FCToggleButton toggle = new FCToggleButton()
     .withIconsInside();
 
 // Apply theme variants
-toggle.addThemeVariants(FCToggleButtonVariant.PRIMARY);
-toggle.addThemeVariants(FCToggleButtonVariant.CONTRAST);
+toggle.addThemeVariants(ToggleButtonVariant.PRIMARY);
+toggle.addThemeVariants(ToggleButtonVariant.CONTRAST);
 
 // Long swipe: wider track, optimized for touch (can be combined with size variants)
-toggle.addThemeVariants(FCToggleButtonVariant.LONGSWIPE);
-toggle.addThemeVariants(FCToggleButtonVariant.LONGSWIPE, FCToggleButtonVariant.LARGE);
+toggle.addThemeVariants(ToggleButtonVariant.LONGSWIPE);
+toggle.addThemeVariants(ToggleButtonVariant.LONGSWIPE, ToggleButtonVariant.LARGE);
 ```
 
 ## Special configuration when using Spring
