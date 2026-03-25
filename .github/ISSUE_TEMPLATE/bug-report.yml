@@ -1,5 +1,5 @@
 name: Bug Report
-description: Please report issues related to FC Toggle Button Add-On here.
+description: Please report issues related to Toggle Button Add-On here.
 body:
   - type: textarea
     id: problem-description
