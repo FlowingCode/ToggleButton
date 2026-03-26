@@ -26,49 +26,32 @@ import static org.junit.Assert.assertNull;
 import com.vaadin.testbench.TestBenchElement;
 import org.junit.Test;
 
-/**
- * Integration tests for {@code ToggleButton} label and value-change behavior.
- *
- * <p>Tests navigate to the "Labels and Icons" demo (route {@code labels}).
- * Component index mapping:
- * <ol start="0">
- *   <li>basic</li>
- *   <li>withLeftLabel ("Off")</li>
- *   <li>withRightLabel ("On")</li>
- *   <li>withBothLabels ("Off" / "On")</li>
- *   <li>withLeftIcon</li>
- *   <li>withRightIcon</li>
- *   <li>withBothIcons</li>
- *   <li>withLabelsAndIcons</li>
- *   <li>highlightLabels (withHighlightLabel)</li>
- *   <li>highlightWithIcons (withHighlightLabel)</li>
- * </ol>
- */
+/** Integration tests for {@code ToggleButton} label and value-change behavior. */
 public class ToggleButtonIT extends AbstractViewTest {
 
   public ToggleButtonIT() {
     super("labels");
   }
 
-  private TestBenchElement getToggle(int index) {
-    return $("toggle-button").get(index);
+  private TestBenchElement getToggle(String id) {
+    return $("toggle-button").id(id);
   }
 
   @Test
   public void initialValueIsFalse() {
-    assertNull(getToggle(0).getAttribute("checked"));
+    assertNull(getToggle("basic").getAttribute("checked"));
   }
 
   @Test
   public void clickTogglesChecked() {
-    TestBenchElement toggle = getToggle(0);
+    TestBenchElement toggle = getToggle("basic");
     toggle.click();
     assertNotNull(toggle.getAttribute("checked"));
   }
 
   @Test
   public void clickAgainTogglesBack() {
-    TestBenchElement toggle = getToggle(0);
+    TestBenchElement toggle = getToggle("basic");
     toggle.click();
     toggle.click();
     assertNull(toggle.getAttribute("checked"));
@@ -76,7 +59,7 @@ public class ToggleButtonIT extends AbstractViewTest {
 
   @Test
   public void leftLabelIsRendered() {
-    TestBenchElement toggle = getToggle(1);
+    TestBenchElement toggle = getToggle("with-left-label");
     String text =
         (String)
             toggle
@@ -88,7 +71,7 @@ public class ToggleButtonIT extends AbstractViewTest {
 
   @Test
   public void rightLabelIsRendered() {
-    TestBenchElement toggle = getToggle(2);
+    TestBenchElement toggle = getToggle("with-right-label");
     String text =
         (String)
             toggle
@@ -100,7 +83,7 @@ public class ToggleButtonIT extends AbstractViewTest {
 
   @Test
   public void bothLabelsAreRendered() {
-    TestBenchElement toggle = getToggle(3);
+    TestBenchElement toggle = getToggle("with-both-labels");
     String texts =
         (String)
             toggle
@@ -114,11 +97,11 @@ public class ToggleButtonIT extends AbstractViewTest {
 
   @Test
   public void highlightLabelAttributeIsReflected() {
-    assertNotNull(getToggle(8).getAttribute("highlightlabel"));
+    assertNotNull(getToggle("highlight-primary").getAttribute("highlightlabel"));
   }
 
   @Test
   public void noHighlightLabelByDefault() {
-    assertNull(getToggle(0).getAttribute("highlightlabel"));
+    assertNull(getToggle("basic").getAttribute("highlightlabel"));
   }
 }

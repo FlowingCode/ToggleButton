@@ -38,6 +38,7 @@ public class ToggleButtonDemo extends Div {
   public ToggleButtonDemo() {
 
     ToggleButton basic = new ToggleButton();
+    basic.setId("basic");
 
     ToggleButton withLabel = new ToggleButton("Notifications");
 
@@ -47,13 +48,16 @@ public class ToggleButtonDemo extends Div {
 
     ToggleButton withLeftLabel = new ToggleButton()
         .setLeftLabel("Off");
+    withLeftLabel.setId("with-left-label");
 
     ToggleButton withRightLabel = new ToggleButton()
         .setRightLabel("On");
+    withRightLabel.setId("with-right-label");
 
     ToggleButton withBothLabels = new ToggleButton()
         .setLeftLabel("Off")
         .setRightLabel("On");
+    withBothLabels.setId("with-both-labels");
 
     ToggleButton withLeftIcon = new ToggleButton()
         .setLeftIcon(new Icon(VaadinIcon.MOON));
@@ -79,6 +83,7 @@ public class ToggleButtonDemo extends Div {
         .withIconsInside();
 
     ToggleButton highlightPrimary = new ToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();
+    highlightPrimary.setId("highlight-primary");
     highlightPrimary.addThemeVariants(ToggleButtonVariant.PRIMARY);
 
     ToggleButton highlightSuccess = new ToggleButton(true).setLeftLabel("Off").setRightLabel("On").withHighlightLabel();

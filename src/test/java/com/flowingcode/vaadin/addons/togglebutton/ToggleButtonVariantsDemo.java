@@ -37,28 +37,36 @@ public class ToggleButtonVariantsDemo extends Div {
 
     // Color variants
     ToggleButton primary = new ToggleButton(true).setLeftLabel("Primary");
+    primary.setId("primary");
     primary.addThemeVariants(ToggleButtonVariant.PRIMARY);
 
     ToggleButton success = new ToggleButton(true).setLeftLabel("Success");
+    success.setId("success");
     success.addThemeVariants(ToggleButtonVariant.SUCCESS);
 
     ToggleButton error = new ToggleButton(true).setLeftLabel("Error");
+    error.setId("error");
     error.addThemeVariants(ToggleButtonVariant.ERROR);
 
     ToggleButton warning = new ToggleButton(true).setLeftLabel("Warning");
+    warning.setId("warning");
     warning.addThemeVariants(ToggleButtonVariant.WARNING);
 
     ToggleButton contrast = new ToggleButton(true).setLeftLabel("Contrast");
+    contrast.setId("contrast");
     contrast.addThemeVariants(ToggleButtonVariant.CONTRAST);
 
     // Size variants
     ToggleButton small = new ToggleButton().setRightLabel("Small");
+    small.setId("small");
     small.addThemeVariants(ToggleButtonVariant.SMALL);
 
     ToggleButton medium = new ToggleButton().setRightLabel("Medium");
+    medium.setId("medium");
     medium.addThemeVariants(ToggleButtonVariant.MEDIUM);
 
     ToggleButton large = new ToggleButton().setRightLabel("Large");
+    large.setId("large");
     large.addThemeVariants(ToggleButtonVariant.LARGE);
 
     // Long swipe variants
@@ -73,9 +81,11 @@ public class ToggleButtonVariantsDemo extends Div {
 
     // States
     ToggleButton disabled = new ToggleButton().setRightLabel("Disabled");
+    disabled.setId("disabled");
     disabled.setEnabled(false);
 
     ToggleButton readOnly = new ToggleButton(true).setRightLabel("Read-only");
+    readOnly.setId("read-only");
     readOnly.setReadOnly(true);
 
     HorizontalLayout colorRow = new HorizontalLayout(primary, success, error, warning, contrast);
