@@ -128,12 +128,6 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
         return this;
     }
 
-    @Override
-    public void setValue(Boolean value) {
-        super.setValue(value);
-        updateLabels();
-    }
-
     private void updateLabels() {
         getElement().setProperty("leftLabel", itemLabelGenerator.apply(false));
         getElement().setProperty("rightLabel", itemLabelGenerator.apply(true));
