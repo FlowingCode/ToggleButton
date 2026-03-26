@@ -41,7 +41,7 @@ import com.vaadin.flow.component.shared.Tooltip;
  *
  * @since 1.0.0
  */
-@Tag("toggle-button")
+@Tag("fc-toggle-button")
 @JsModule("./toggle-button.js")
 @NpmPackage(value = "lit", version = "3.3.2")
 public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Boolean>

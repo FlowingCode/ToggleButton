@@ -497,5 +497,5 @@ class ToggleButton extends LitElement {
   }
 }
 
-customElements.define('toggle-button', ToggleButton);
+customElements.define('fc-toggle-button', ToggleButton);
 export { ToggleButton };
