@@ -28,7 +28,6 @@ import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.shared.HasThemeVariant;
 import com.vaadin.flow.component.shared.HasTooltip;
 import com.vaadin.flow.component.shared.Tooltip;
@@ -43,7 +42,6 @@ import com.vaadin.flow.component.shared.Tooltip;
  */
 @Tag("fc-toggle-button")
 @JsModule("./toggle-button.js")
-@NpmPackage(value = "lit", version = "3.3.2")
 public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Boolean>
     implements HasSize,
         HasComponents,
