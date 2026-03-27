@@ -30,7 +30,7 @@ import com.vaadin.flow.router.Route;
 @DemoSource
 @PageTitle("Events and Accessibility")
 @SuppressWarnings("serial")
-@Route(value = "events", layout = ToggleButtonDemoView.class)
+@Route(value = "togglebutton/events", layout = ToggleButtonDemoView.class)
 public class ToggleButtonEventsDemo extends Div {
 
   public ToggleButtonEventsDemo() {

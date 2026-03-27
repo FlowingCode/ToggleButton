@@ -30,7 +30,7 @@ import com.vaadin.flow.router.Route;
 @DemoSource
 @PageTitle("Theme Variants")
 @SuppressWarnings("serial")
-@Route(value = "variants", layout = ToggleButtonDemoView.class)
+@Route(value = "togglebutton/variants", layout = ToggleButtonDemoView.class)
 public class ToggleButtonVariantsDemo extends Div {
 
   public ToggleButtonVariantsDemo() {

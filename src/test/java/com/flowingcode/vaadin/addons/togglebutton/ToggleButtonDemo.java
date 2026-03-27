@@ -32,7 +32,7 @@ import com.vaadin.flow.router.Route;
 @DemoSource
 @PageTitle("Labels and Icons")
 @SuppressWarnings("serial")
-@Route(value = "labels", layout = ToggleButtonDemoView.class)
+@Route(value = "togglebutton/labels", layout = ToggleButtonDemoView.class)
 public class ToggleButtonDemo extends Div {
 
   public ToggleButtonDemo() {
