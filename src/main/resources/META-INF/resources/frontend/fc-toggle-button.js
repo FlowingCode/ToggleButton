@@ -40,18 +40,18 @@ class ToggleButton extends LitElement {
       display: inline-flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: var(--lumo-space-xs, 4px);
-      font-family: var(--lumo-font-family);
-      color: var(--lumo-body-text-color);
+      gap: var(--lumo-space-xs, var(--vaadin-gap-xs));
+      font-family: var(--lumo-font-family, var(--aura-font-family));
+      color: var(--lumo-body-text-color, var(--vaadin-text-color));
       cursor: pointer;
       user-select: none;
       transition: opacity 0.2s;
     }
 
     .field-label {
-      font-size: var(--lumo-font-size-s, 14px);
+      font-size: var(--lumo-font-size-s, var(--aura-font-size-s));
       font-weight: 500;
-      color: var(--lumo-secondary-text-color);
+      color: var(--lumo-secondary-text-color, var(--vaadin-text-color-secondary));
       line-height: 1;
     }
 
@@ -69,37 +69,37 @@ class ToggleButton extends LitElement {
     .container {
       display: flex;
       align-items: center;
-      gap: var(--lumo-space-s, 8px);
+      gap: var(--lumo-space-s, var(--vaadin-gap-s));
     }
 
     .label {
-      font-size: var(--lumo-font-size-s, 14px);
+      font-size: var(--lumo-font-size-s, var(--aura-font-size-s));
       font-weight: 500;
       transition: color 0.3s;
     }
 
     .label.active {
-      color: var(--lumo-primary-text-color);
+      color: var(--lumo-primary-text-color, var(--aura-blue-text));
     }
 
     :host([theme~="success"]) .label.active {
-      color: var(--lumo-success-text-color);
+      color: var(--lumo-success-text-color, var(--aura-green-text));
     }
 
     :host([theme~="error"]) .label.active {
-      color: var(--lumo-error-text-color);
+      color: var(--lumo-error-text-color, var(--aura-red-text));
     }
 
     :host([theme~="warning"]) .label.active {
-      color: var(--lumo-warning-text-color, #d08000);
+      color: var(--lumo-warning-text-color, var(--aura-orange-text));
     }
 
     :host([theme~="contrast"]) .label.active {
-      color: var(--lumo-contrast-color);
+      color: var(--lumo-contrast, var(--aura-neutral));
     }
 
     .label.inactive {
-      color: var(--lumo-secondary-text-color);
+      color: var(--lumo-secondary-text-color, var(--vaadin-text-color-secondary));
       opacity: 0.7;
     }
 
@@ -114,16 +114,16 @@ class ToggleButton extends LitElement {
     }
 
     :host([checked]) .switch {
-      background-color: var(--lumo-primary-color, #007bff);
+      background-color: var(--lumo-primary-color, var(--aura-blue));
     }
 
     /* Theme Variants */
     :host([theme~="success"][checked]) .switch {
-      background-color: var(--lumo-success-color, #28a745);
+      background-color: var(--lumo-success-color, var(--aura-green));
     }
 
     :host([theme~="error"][checked]) .switch {
-      background-color: var(--lumo-error-color, #dc3545);
+      background-color: var(--lumo-error-color, var(--aura-red));
     }
 
     :host([theme~="warning"][checked]) .switch {
@@ -132,15 +132,15 @@ class ToggleButton extends LitElement {
     }
 
     :host([theme~="primary"][checked]) .switch {
-      background-color: var(--lumo-primary-color, #007bff);
+      background-color: var(--lumo-primary-color, var(--aura-blue));
     }
 
     :host([theme~="contrast"][checked]) .switch {
-      background-color: var(--lumo-contrast-color, #000);
+      background-color: var(--lumo-contrast, var(--aura-neutral));
     }
 
     :host([theme~="contrast"]) .slider {
-      background-color: var(--lumo-base-color, #fff);
+      background-color: var(--lumo-base-color, var(--vaadin-background-color));
     }
 
     /* Slider colors for variants if needed */
@@ -154,9 +154,9 @@ class ToggleButton extends LitElement {
       left: 3px;
       width: 18px;
       height: 18px;
-      background-color: var(--lumo-base-color, #fff);
+      background-color: var(--lumo-base-color, var(--vaadin-background-color));
       border-radius: 50%;
-      box-shadow: var(--lumo-box-shadow-s, 0 2px 4px rgba(0,0,0,0.2));
+      box-shadow: var(--lumo-box-shadow-s, var(--aura-shadow-xs));
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -223,7 +223,7 @@ class ToggleButton extends LitElement {
     }
 
     :host([theme~="medium"]) .label {
-      font-size: var(--lumo-font-size-s, 14px);
+      font-size: var(--lumo-font-size-s, var(--aura-font-size-s));
     }
 
     :host([theme~="small"]) .switch {
@@ -243,7 +243,7 @@ class ToggleButton extends LitElement {
     }
 
     :host([theme~="small"]) .label {
-      font-size: var(--lumo-font-size-xs, 12px);
+      font-size: var(--lumo-font-size-xs, var(--aura-font-size-xs));
     }
 
     :host([theme~="large"]) .switch {
@@ -264,7 +264,7 @@ class ToggleButton extends LitElement {
     }
 
     :host([theme~="large"]) .label {
-      font-size: var(--lumo-font-size-l, 18px);
+      font-size: var(--lumo-font-size-l, var(--aura-font-size-l));
     }
 
     :host([theme~="longswipe"]) .switch {
@@ -292,7 +292,7 @@ class ToggleButton extends LitElement {
     }
 
     :host([theme~="longswipe"]) .label {
-      font-size: var(--lumo-font-size-s, 14px);
+      font-size: var(--lumo-font-size-s, var(--aura-font-size-s));
     }
 
     :host([theme~="longswipe"][theme~="small"]) .switch {
@@ -346,8 +346,8 @@ class ToggleButton extends LitElement {
 
     /* Readonly Styles: Unify the look for both checked/unchecked and variants */
     :host([readonly]) .switch {
-      background-color: var(--lumo-contrast-10pct, #f0f0f0) !important;
-      border: 3px dotted var(--lumo-contrast-30pct, #ccc) !important;
+      background-color: var(--lumo-contrast-10pct, var(--vaadin-background-container)) !important;
+      border: 3px dotted var(--lumo-contrast-30pct, var(--vaadin-border-color)) !important;
       box-sizing: border-box;
     }
 
@@ -355,7 +355,7 @@ class ToggleButton extends LitElement {
       top: 0 !important;
       left: 0 !important;
       box-shadow: none !important;
-      background-color: var(--lumo-contrast-40pct, #999) !important;
+      background-color: var(--lumo-contrast-40pct, var(--vaadin-background-container-strong)) !important;
     }
   `;
 
