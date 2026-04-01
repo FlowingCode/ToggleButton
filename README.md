@@ -22,7 +22,7 @@ A toggle button component for Vaadin Flow that supports customizable labels and 
 
 ## Online demo
 
-[Online demo here](http://addonsv24.flowingcode.com/togglebutton)
+[Online demo here](http://addonsv25.flowingcode.com/togglebutton)
 
 ## Download release
 
