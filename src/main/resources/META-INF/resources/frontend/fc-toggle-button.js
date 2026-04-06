@@ -346,16 +346,16 @@ class ToggleButton extends LitElement {
 
     /* Readonly Styles: Unify the look for both checked/unchecked and variants */
     :host([readonly]) .switch {
-      background-color: var(--lumo-contrast-10pct, var(--vaadin-background-container)) !important;
-      border: 3px dotted var(--lumo-contrast-30pct, var(--vaadin-border-color)) !important;
+      background-color: var(--lumo-contrast-10pct, var(--vaadin-background-container));
+      border: 3px dotted var(--lumo-contrast-30pct, var(--vaadin-border-color));
       box-sizing: border-box;
     }
 
     :host([readonly]) .slider {
-      top: 0 !important;
-      left: 0 !important;
-      box-shadow: none !important;
-      background-color: var(--lumo-contrast-40pct, var(--vaadin-background-container-strong)) !important;
+      top: 0;
+      left: 0;
+      box-shadow: none;
+      background-color: var(--lumo-contrast-40pct, var(--vaadin-background-container-strong));
     }
   `;
 
