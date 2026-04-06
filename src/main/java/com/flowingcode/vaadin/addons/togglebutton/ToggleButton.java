@@ -51,6 +51,7 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
         HasThemeVariant<ToggleButtonVariant> {
 
     private ItemLabelGenerator<Boolean> itemLabelGenerator = b -> "";
+    private Tooltip tooltip;
 
     /** Creates a new toggle button with an initial value of {@code false}. */
     public ToggleButton() {
@@ -106,8 +107,18 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
 
     @Override
     public Tooltip setTooltipText(String text) {
-        Tooltip tooltip = Tooltip.forComponent(this);
+        if (tooltip == null) {
+            tooltip = Tooltip.forComponent(this);
+        }
         tooltip.setText(text);
+        return tooltip;
+    }
+
+    @Override
+    public Tooltip getTooltip() {
+        if (tooltip == null) {
+            tooltip = Tooltip.forComponent(this);
+        }
         return tooltip;
     }
 
