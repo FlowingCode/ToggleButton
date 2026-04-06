@@ -34,7 +34,7 @@ public class ToggleButtonIT extends AbstractViewTest {
   }
 
   private TestBenchElement getToggle(String id) {
-    return $("toggle-button").id(id);
+    return $("fc-toggle-button").id(id);
   }
 
   @Test

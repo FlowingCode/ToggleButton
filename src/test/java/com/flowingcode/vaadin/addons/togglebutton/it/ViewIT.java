@@ -57,7 +57,7 @@ public class ViewIT extends AbstractViewTest {
 
   @Test
   public void componentWorks() {
-    TestBenchElement element = $("toggle-button").first();
+    TestBenchElement element = $("fc-toggle-button").first();
     assertThat(element, hasBeenUpgradedToCustomElement);
   }
 }
