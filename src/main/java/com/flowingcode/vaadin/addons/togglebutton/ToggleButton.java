@@ -218,8 +218,7 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
      * @since 1.0.0
      */
     public ToggleButton setLeftIcon(Component icon) {
-        icon.getElement().setAttribute("slot", "left");
-        add(icon);
+        setSlottedIcon(icon, "left");
         return this;
     }
 
@@ -231,8 +230,15 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
      * @since 1.0.0
      */
     public ToggleButton setRightIcon(Component icon) {
-        icon.getElement().setAttribute("slot", "right");
-        add(icon);
+        setSlottedIcon(icon, "right");
         return this;
+    }
+
+    private void setSlottedIcon(Component icon, String slot) {
+        getElement().getChildren()
+            .filter(e -> slot.equals(e.getAttribute("slot")))
+            .forEach(e -> e.removeFromParent());
+        icon.getElement().setAttribute("slot", slot);
+        add(icon);
     }
 }
