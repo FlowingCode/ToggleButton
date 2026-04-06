@@ -456,7 +456,7 @@ class ToggleButton extends LitElement {
     const maxTranslate = switchEl ? switchEl.offsetWidth - sliderWidth - gap * 2 : 20;
     const threshold = maxTranslate * 0.5;
 
-    const newChecked = dx > 0 ? true : false;
+    const newChecked = dx > 0;
     if (Math.abs(dx) >= threshold && newChecked !== this.checked) {
       this.checked = newChecked;
       this._fireChange();
