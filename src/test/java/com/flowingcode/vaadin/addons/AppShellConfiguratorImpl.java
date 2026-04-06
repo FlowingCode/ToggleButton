@@ -1,6 +1,6 @@
 /*-
  * #%L
- * Badge List Add-on
+ * Toggle Button Add-On
  * %%
  * Copyright (C) 2023 - 2026 Flowing Code
  * %%
