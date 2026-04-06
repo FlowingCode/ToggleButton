@@ -127,7 +127,7 @@ class ToggleButton extends LitElement {
     }
 
     :host([theme~="warning"][checked]) .switch {
-      background-color: #ffc107; /* Custom warning color if Lumo doesn't provide one */
+      background-color: var(--lumo-warning-color, var(--aura-yellow));
       color: rgba(0, 0, 0, 0.85);
     }
 
