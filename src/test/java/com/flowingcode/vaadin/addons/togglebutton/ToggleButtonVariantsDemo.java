@@ -92,10 +92,12 @@ public class ToggleButtonVariantsDemo extends Div {
     HorizontalLayout sizeRow = new HorizontalLayout(small, medium, large);
     HorizontalLayout longswipeRow = new HorizontalLayout(longswipeSmall, longswipeMedium, longswipeLarge);
     HorizontalLayout statesRow = new HorizontalLayout(disabled, readOnly);
-    colorRow.getStyle().set("gap", "var(--lumo-space-l)");
-    sizeRow.getStyle().set("gap", "var(--lumo-space-l)");
-    longswipeRow.getStyle().set("gap", "var(--lumo-space-l)");
-    statesRow.getStyle().set("gap", "var(--lumo-space-l)");
+    // #if vaadin eq 0
+    colorRow.getStyle().set("gap", "var(--lumo-space-l, var(--vaadin-gap-l))");
+    sizeRow.getStyle().set("gap", "var(--lumo-space-l, var(--vaadin-gap-l))");
+    longswipeRow.getStyle().set("gap", "var(--lumo-space-l, var(--vaadin-gap-l))");
+    statesRow.getStyle().set("gap", "var(--lumo-space-l, var(--vaadin-gap-l))");
+    // #endif
 
     add(new VerticalLayout(
         new H3("Color variants"),
