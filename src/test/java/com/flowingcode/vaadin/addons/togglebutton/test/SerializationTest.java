@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Template Add-on
+ * Toggle Button Add-On
  * %%
- * Copyright (C) 2025 Flowing Code
+ * Copyright (C) 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.template.test;
+package com.flowingcode.vaadin.addons.togglebutton.test;
 
-import com.flowingcode.vaadin.addons.template.TemplateAddon;
+import com.flowingcode.vaadin.addons.togglebutton.ToggleButton;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class SerializationTest {
   @Test
   public void testSerialization() throws ClassNotFoundException, IOException {
     try {
-      testSerializationOf(new TemplateAddon());
+      testSerializationOf(new ToggleButton());
     } catch (Exception e) {
       Assert.fail("Problem while testing serialization: " + e.getMessage());
     }

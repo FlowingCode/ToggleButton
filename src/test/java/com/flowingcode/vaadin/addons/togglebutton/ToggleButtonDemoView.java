@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Template Add-on
+ * Toggle Button Add-On
  * %%
- * Copyright (C) 2025 Flowing Code
+ * Copyright (C) 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.template;
+package com.flowingcode.vaadin.addons.togglebutton;
 
 import com.flowingcode.vaadin.addons.DemoLayout;
 import com.flowingcode.vaadin.addons.GithubLink;
@@ -27,12 +27,14 @@ import com.vaadin.flow.router.Route;
 
 @SuppressWarnings("serial")
 @ParentLayout(DemoLayout.class)
-@Route("template")
-@GithubLink("https://github.com/FlowingCode/AddonStarter24")
-public class TemplateDemoView extends TabbedDemo {
+@Route("togglebutton")
+@GithubLink("https://github.com/FlowingCode/ToggleButton")
+public class ToggleButtonDemoView extends TabbedDemo {
 
-  public TemplateDemoView() {
-    addDemo(TemplateDemo.class);
+  public ToggleButtonDemoView() {
+    addDemo(ToggleButtonDemo.class);
+    addDemo(ToggleButtonVariantsDemo.class);
+    addDemo(ToggleButtonEventsDemo.class);
     setSizeFull();
   }
 }

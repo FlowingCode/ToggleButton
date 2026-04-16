@@ -1,24 +1,32 @@
-[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/template-add-on)
-[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/template-add-on.svg)](https://vaadin.com/directory/component/template-add-on)
-[![Build Status](https://jenkins.flowingcode.com/job/template-addon/badge/icon)](https://jenkins.flowingcode.com/job/template-addon)
-[![Maven Central](https://img.shields.io/maven-central/v/com.flowingcode.vaadin.addons/template-addon)](https://mvnrepository.com/artifact/com.flowingcode.vaadin.addons/template-addon)
-[![Javadoc](https://img.shields.io/badge/javadoc-00b4f0)](https://javadoc.flowingcode.com/artifact/com.flowingcode.vaadin.addons/template-addon)
+[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/toggle-button-addon)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/toggle-button-addon.svg)](https://vaadin.com/directory/component/toggle-button-addon)
+[![Build Status](https://jenkins.flowingcode.com/job/toggle-button-addon/badge/icon)](https://jenkins.flowingcode.com/job/toggle-button-addon)
+[![Maven Central](https://img.shields.io/maven-central/v/com.flowingcode.vaadin.addons/toggle-button-addon)](https://mvnrepository.com/artifact/com.flowingcode.vaadin.addons/toggle-button-addon)
+[![Javadoc](https://img.shields.io/badge/javadoc-00b4f0)](https://javadoc.flowingcode.com/artifact/com.flowingcode.vaadin.addons/toggle-button-addon)
 
-# Template Add-On
+# Toggle Button Add-On
 
-This is a template project for building new Vaadin 24 add-ons
+A toggle button component for Vaadin Flow that supports customizable labels and icons on both sides of the toggle.
 
 ## Features
 
-* List the features of your add-on in here
+* Toggle between two states with a single click
+* Customizable left and right labels
+* Support for icons on both sides via slots
+* Optional label highlighting: active-side label uses the theme variant color (primary, success, warning, error, or contrast), inactive side is dimmed
+* Optional icons-inside layout: icons adjacent to the switch, labels on the outer edges
+* Theme variants: `SMALL`, `MEDIUM`, `LARGE`, `LONGSWIPE`, `PRIMARY`, `SUCCESS`, `WARNING`, `ERROR`, `CONTRAST`
+* `LONGSWIPE` variant produces a wider switch track, optimized for touch interaction; can be combined with size variants
+* Fluent API for easy configuration
+* Full integration with Vaadin's `HasValue`, `HasSize`, `HasLabel`, `HasAriaLabel`, and `HasTooltip`
 
 ## Online demo
 
-[Online demo here](http://addonsv24.flowingcode.com/template)
+[Online demo here](http://addonsv25.flowingcode.com/togglebutton)
 
 ## Download release
 
-[Available in Vaadin Directory](https://vaadin.com/directory/component/template-add-on)
+[Available in Vaadin Directory](https://vaadin.com/directory/component/toggle-button-addon)
 
 ### Maven install
 
@@ -27,8 +35,8 @@ Add the following dependencies in your pom.xml file:
 ```xml
 <dependency>
    <groupId>com.flowingcode.vaadin.addons</groupId>
-   <artifactId>template-addon</artifactId>
-   <version>X.Y.Z</version>
+   <artifactId>toggle-button-addon</artifactId>
+   <version>1.0.0</version>
 </dependency>
 ```
 <!-- the above dependency should be updated with latest released version information -->
@@ -44,11 +52,11 @@ To see the demo, navigate to http://localhost:8080/
 
 ## Release notes
 
-See [here](https://github.com/FlowingCode/TemplateAddon/releases)
+See [here](https://github.com/FlowingCode/ToggleButton/releases)
 
 ## Issue tracking
 
-The issues for this add-on are tracked on its github.com page. All bug reports and feature requests are appreciated. 
+The issues for this add-on are tracked on its github.com page. All bug reports and feature requests are appreciated.
 
 ## Contributions
 
@@ -62,9 +70,9 @@ Creating an issue is a highly valuable contribution. If you've found a bug or ha
 * If not, create a new issue, choosing the right option: "Bug Report" or "Feature Request". Try to keep the scope minimal but as detailed as possible.
 
 > **A Note on Bug Reports**
-> 
+>
 > Please complete all the requested fields to the best of your ability. Each piece of information, like the environment versions and a clear description, helps us understand the context of the issue.
-> 
+>
 > While all details are important, the **[minimal, reproducible example](https://stackoverflow.com/help/minimal-reproducible-example)** is the most critical part of your report. It's essential because it removes ambiguity and allows our team to observe the problem firsthand, exactly as you are experiencing it.
 
 #### 2. Contributing Code via Pull Requests
@@ -72,7 +80,7 @@ Creating an issue is a highly valuable contribution. If you've found a bug or ha
 As a first step, please refer to our [Development Conventions](https://github.com/FlowingCode/DevelopmentConventions) page to find information about Conventional Commits & Code Style requirements.
 
 Then, follow these steps for creating a contribution:
- 
+
 - Fork this project.
 - Create an issue to this project about the contribution (bug or feature) if there is no such issue about it already. Try to keep the scope minimal.
 - Develop and test the fix or functionality carefully. Only include minimum amount of code needed to fix the issue.
@@ -84,22 +92,69 @@ Then, follow these steps for creating a contribution:
 
 This add-on is distributed under Apache License 2.0. For license terms, see LICENSE.txt.
 
-Template Add-On is written by Flowing Code S.A.
+Toggle Button Add-On is written by Flowing Code S.A.
 
 # Developer Guide
 
 ## Getting started
 
-Add your code samples in this section
+```java
+// Basic toggle button
+ToggleButton toggle = new ToggleButton();
+
+// With a field label (shown above the toggle)
+ToggleButton toggle = new ToggleButton("Notifications");
+
+// With a field label and initial value
+ToggleButton toggle = new ToggleButton("Dark mode", true);
+
+// With labels
+ToggleButton toggle = new ToggleButton()
+    .setLeftLabel("Off")
+    .setRightLabel("On");
+
+// With icons
+ToggleButton toggle = new ToggleButton()
+    .setLeftLabel("Dark")
+    .setRightLabel("Light")
+    .setLeftIcon(new Icon(VaadinIcon.MOON))
+    .setRightIcon(new Icon(VaadinIcon.SUN_O));
+
+// Listen to value changes
+toggle.addValueChangeListener(e ->
+    Notification.show("Toggle is now: " + (e.getValue() ? "on" : "off")));
+
+// Enable label highlighting (active side uses the theme variant color, inactive side is dimmed)
+ToggleButton toggle = new ToggleButton()
+    .setLeftLabel("Off")
+    .setRightLabel("On")
+    .withHighlightLabel();
+
+// Icons inside: [label] [icon] [switch] [icon] [label] (default is [icon] [label] [switch] [label] [icon])
+ToggleButton toggle = new ToggleButton()
+    .setLeftIcon(new Icon(VaadinIcon.MOON))
+    .setLeftLabel("Dark")
+    .setRightLabel("Light")
+    .setRightIcon(new Icon(VaadinIcon.SUN_O))
+    .withIconsInside();
+
+// Apply theme variants
+toggle.addThemeVariants(ToggleButtonVariant.PRIMARY);
+toggle.addThemeVariants(ToggleButtonVariant.CONTRAST);
+
+// Long swipe: wider track, optimized for touch (can be combined with size variants)
+toggle.addThemeVariants(ToggleButtonVariant.LONGSWIPE);
+toggle.addThemeVariants(ToggleButtonVariant.LONGSWIPE, ToggleButtonVariant.LARGE);
+```
 
 ## Special configuration when using Spring
 
-By default, Vaadin Flow only includes `com/vaadin/flow/component` to be always scanned for UI components and views. For this reason, the add-on might need to be allowed in order to display correctly. 
+By default, Vaadin Flow only includes `com/vaadin/flow/component` to be always scanned for UI components and views. For this reason, the add-on might need to be allowed in order to display correctly.
 
 To do so, just add `com.flowingcode` to the `vaadin.allowed-packages` property in `src/main/resources/application.properties`, like:
 
 ```
 vaadin.allowed-packages = com.vaadin,org.vaadin,dev.hilla,com.flowingcode
 ```
- 
+
 More information on Spring scanning configuration [here](https://vaadin.com/docs/latest/integrations/spring/configuration/#configure-the-scanning-of-packages).

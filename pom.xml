@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.flowingcode.vaadin.addons</groupId>
-    <artifactId>template-addon</artifactId>
+    <artifactId>toggle-button-addon</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>Template Add-on</name>
-    <description>Template Add-on for Vaadin Flow</description>
-    <url>https://www.flowingcode.com/en/open-source/</url>
+    <name>Toggle Button Add-On</name>
+    <description>Toggle button built on Vaadin components with support for customizable labels and icons</description>
+    <url>https://github.com/FlowingCode/ToggleButton</url>
 
     <properties>
         <vaadin.version>24.9.1</vaadin.version>
@@ -20,7 +20,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <drivers.dir>${project.basedir}/drivers</drivers.dir>
         <jetty.version>11.0.20</jetty.version>
-        <flowingcode.commons.demo.version>5.0.0</flowingcode.commons.demo.version>
+        <flowingcode.commons.demo.version>5.2.0</flowingcode.commons.demo.version>
     </properties>
 
     <organization>
@@ -38,9 +38,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/FlowingCode/AddonStarter24</url>
-        <connection>scm:git:git://github.com/FlowingCode/AddonStarter24.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:/FlowingCode/AddonStarter24.git</developerConnection>
+        <url>https://github.com/FlowingCode/ToggleButton</url>
+        <connection>scm:git:git://github.com/FlowingCode/ToggleButton.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:/FlowingCode/ToggleButton.git</developerConnection>
         <tag>master</tag>
     </scm>
     
@@ -579,6 +579,12 @@
                     <groupId>com.vaadin</groupId>
                     <artifactId>vaadin-dev</artifactId>
                     <optional>true</optional>
+                </dependency>
+                <dependency>
+                    <groupId>jakarta.servlet</groupId>
+                    <artifactId>jakarta.servlet-api</artifactId>
+                    <version>6.1.0</version>
+                    <scope>test</scope>
                 </dependency>
             </dependencies>
         </profile>

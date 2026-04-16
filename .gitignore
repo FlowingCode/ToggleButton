@@ -19,3 +19,4 @@ vite.config.ts
 /src/main/bundles
 /src/main/frontend/generated
 /src/main/frontend/index.html
+/.claude

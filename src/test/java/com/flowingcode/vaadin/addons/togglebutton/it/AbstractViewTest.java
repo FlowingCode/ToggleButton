@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Template Add-on
+ * Toggle Button Add-On
  * %%
- * Copyright (C) 2025 Flowing Code
+ * Copyright (C) 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,7 @@
  * limitations under the License.
  * #L%
  */
-
-package com.flowingcode.vaadin.addons.template.it;
+package com.flowingcode.vaadin.addons.togglebutton.it;
 
 import com.vaadin.testbench.ScreenshotOnFailureRule;
 import com.vaadin.testbench.TestBench;
@@ -33,7 +32,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
  * Base class for ITs
  *
  * <p>The tests use Chrome driver (see pom.xml for integration-tests profile) to run integration
- * tests on a headless Chrome. If a property {@code test.use .hub} is set to true, {@code
+ * tests on a headless Chrome. If a property {@code test.use.hub} is set to true, {@code
  * AbstractViewTest} will assume that the TestBench test is running in a CI environment. In order to
  * keep the this class light, it makes certain assumptions about the CI environment (such as
  * available environment variables). It is not advisable to use this class as a base class for you

@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Template Add-on
+ * Toggle Button Add-On
  * %%
- * Copyright (C) 2025 Flowing Code
+ * Copyright (C) 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,7 @@
  * limitations under the License.
  * #L%
  */
-
-package com.flowingcode.vaadin.addons.template.it;
+package com.flowingcode.vaadin.addons.togglebutton.it;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -58,7 +57,7 @@ public class ViewIT extends AbstractViewTest {
 
   @Test
   public void componentWorks() {
-    TestBenchElement element = $("paper-input").first();
+    TestBenchElement element = $("fc-toggle-button").first();
     assertThat(element, hasBeenUpgradedToCustomElement);
   }
 }
