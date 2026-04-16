@@ -36,7 +36,7 @@ Add the following dependencies in your pom.xml file:
 <dependency>
    <groupId>com.flowingcode.vaadin.addons</groupId>
    <artifactId>toggle-button-addon</artifactId>
-   <version>1.0.0</version>
+   <version>X.Y.Z</version>
 </dependency>
 ```
 <!-- the above dependency should be updated with latest released version information -->
