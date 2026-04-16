@@ -30,11 +30,11 @@ import com.vaadin.flow.component.shared.ThemeVariant;
  * @since 1.0.0
  */
 public enum ToggleButtonVariant implements ThemeVariant {
-    /** Renders the toggle at a smaller size (32×18 px track). */
+    /** Renders the toggle at a smaller size (32x18 px track). */
     SMALL("small"),
-    /** Renders the toggle at the default medium size (44×24 px track). */
+    /** Renders the toggle at the default medium size (44x24 px track). */
     MEDIUM("medium"),
-    /** Renders the toggle at a larger size (56×32 px track). */
+    /** Renders the toggle at a larger size (56x32 px track). */
     LARGE("large"),
     /**
      * Renders a wider switch track optimized for touch interaction. Can be combined with size
