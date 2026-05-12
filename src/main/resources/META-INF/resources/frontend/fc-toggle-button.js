@@ -357,6 +357,32 @@ class ToggleButton extends LitElement {
       box-shadow: none;
       background-color: var(--lumo-contrast-40pct, var(--vaadin-background-container-strong));
     }
+
+    /* Readonly + checked + color variant: desaturated variant tint on the border. */
+    :host([theme~="primary"][checked][readonly]) .switch {
+      background-color: transparent;
+      border-color: color-mix(in srgb, var(--lumo-primary-color, var(--aura-blue)) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
+    }
+
+    :host([theme~="success"][checked][readonly]) .switch {
+      background-color: transparent;
+      border-color: color-mix(in srgb, var(--lumo-success-color, var(--aura-green)) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
+    }
+
+    :host([theme~="error"][checked][readonly]) .switch {
+      background-color: transparent;
+      border-color: color-mix(in srgb, var(--lumo-error-color, var(--aura-red)) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
+    }
+
+    :host([theme~="warning"][checked][readonly]) .switch {
+      background-color: transparent;
+      border-color: color-mix(in srgb, var(--lumo-warning-color, var(--aura-yellow)) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
+    }
+
+    :host([theme~="contrast"][checked][readonly]) .switch {
+      background-color: transparent;
+      border-color: color-mix(in srgb, var(--lumo-contrast, var(--aura-neutral)) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
+    }
   `;
 
   constructor() {
