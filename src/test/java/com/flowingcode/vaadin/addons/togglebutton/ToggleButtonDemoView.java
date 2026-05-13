@@ -34,6 +34,7 @@ public class ToggleButtonDemoView extends TabbedDemo {
   public ToggleButtonDemoView() {
     addDemo(ToggleButtonDemo.class);
     addDemo(ToggleButtonVariantsDemo.class);
+    addDemo(ToggleButtonReadOnlyDemo.class);
     addDemo(ToggleButtonEventsDemo.class);
     setSizeFull();
   }
