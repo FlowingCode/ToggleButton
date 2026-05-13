@@ -362,10 +362,20 @@ class ToggleButton extends LitElement {
     }
 
     :host([readonly]) .slider {
-      top: 1px;
-      left: 1px;
+      top: 2px;
+      left: 2px;
       box-shadow: none;
       background-color: var(--lumo-contrast-40pct, var(--vaadin-background-container-strong));
+    }
+
+    :host([readonly][theme~="small"]) .slider {
+      top: 1px;
+      left: 1px;
+    }
+
+    :host([readonly][theme~="large"]) .slider {
+      top: 3px;
+      left: 3px;
     }
 
     /* Readonly + checked + color variant: desaturated variant tint on the border. */
