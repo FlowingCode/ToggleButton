@@ -46,6 +46,16 @@ class ToggleButton extends LitElement {
       cursor: pointer;
       user-select: none;
       transition: opacity 0.2s;
+      /* Color tokens: default to theme variables. Override these when using Base theme. */
+      --toggle-button-primary-color: var(--lumo-primary-color, var(--aura-blue));
+      --toggle-button-success-color: var(--lumo-success-color, var(--aura-green));
+      --toggle-button-error-color: var(--lumo-error-color, var(--aura-red));
+      --toggle-button-warning-color: var(--lumo-warning-color, var(--aura-yellow));
+      --toggle-button-contrast-color: var(--lumo-contrast, var(--aura-neutral));
+      --toggle-button-primary-text-color: var(--lumo-primary-text-color, var(--aura-blue-text));
+      --toggle-button-success-text-color: var(--lumo-success-text-color, var(--aura-green-text));
+      --toggle-button-error-text-color: var(--lumo-error-text-color, var(--aura-red-text));
+      --toggle-button-warning-text-color: var(--lumo-warning-text-color, var(--aura-orange-text));
     }
 
     .field-label {
@@ -79,23 +89,23 @@ class ToggleButton extends LitElement {
     }
 
     .label.active {
-      color: var(--lumo-primary-text-color, var(--aura-blue-text));
+      color: var(--toggle-button-primary-text-color);
     }
 
     :host([theme~="success"]) .label.active {
-      color: var(--lumo-success-text-color, var(--aura-green-text));
+      color: var(--toggle-button-success-text-color);
     }
 
     :host([theme~="error"]) .label.active {
-      color: var(--lumo-error-text-color, var(--aura-red-text));
+      color: var(--toggle-button-error-text-color);
     }
 
     :host([theme~="warning"]) .label.active {
-      color: var(--lumo-warning-text-color, var(--aura-orange-text));
+      color: var(--toggle-button-warning-text-color);
     }
 
     :host([theme~="contrast"]) .label.active {
-      color: var(--lumo-contrast, var(--aura-neutral));
+      color: var(--toggle-button-contrast-color);
     }
 
     .label.inactive {
@@ -114,33 +124,33 @@ class ToggleButton extends LitElement {
     }
 
     :host([checked]) .switch {
-      background-color: var(--lumo-primary-color, var(--aura-blue));
+      background-color: var(--toggle-button-primary-color);
     }
 
     /* Theme Variants */
     :host([theme~="success"][checked]) .switch {
-      background-color: var(--lumo-success-color, var(--aura-green));
+      background-color: var(--toggle-button-success-color);
     }
 
     :host([theme~="error"][checked]) .switch {
-      background-color: var(--lumo-error-color, var(--aura-red));
+      background-color: var(--toggle-button-error-color);
     }
 
     :host([theme~="warning"][checked]) .switch {
-      background-color: var(--lumo-warning-color, var(--aura-yellow));
+      background-color: var(--toggle-button-warning-color);
       color: rgba(0, 0, 0, 0.85);
     }
 
     :host([theme~="primary"][checked]) .switch {
-      background-color: var(--lumo-primary-color, var(--aura-blue));
+      background-color: var(--toggle-button-primary-color);
     }
 
     :host([theme~="contrast"][checked]) .switch {
-      background-color: var(--lumo-contrast, var(--aura-neutral));
+      background-color: var(--toggle-button-contrast-color);
     }
 
     :host([theme~="contrast"]) .slider {
-      background-color: var(--lumo-base-color, var(--vaadin-background-color));
+      background-color: var(--lumo-base-color, var(--vaadin-background-color, #ffffff));
     }
 
     /* Slider colors for variants if needed */
@@ -154,9 +164,9 @@ class ToggleButton extends LitElement {
       left: 3px;
       width: 18px;
       height: 18px;
-      background-color: var(--lumo-base-color, var(--vaadin-background-color));
+      background-color: var(--lumo-base-color, var(--vaadin-background-color, #ffffff));
       border-radius: 50%;
-      box-shadow: var(--lumo-box-shadow-s, var(--aura-shadow-xs));
+      box-shadow: var(--lumo-box-shadow-s, var(--aura-shadow-xs, 0 1px 2px rgba(0,0,0,0.2)));
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -361,27 +371,27 @@ class ToggleButton extends LitElement {
     /* Readonly + checked + color variant: desaturated variant tint on the border. */
     :host([theme~="primary"][checked][readonly]) .switch {
       background-color: transparent;
-      border-color: color-mix(in srgb, var(--lumo-primary-color, var(--aura-blue)) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
+      border-color: color-mix(in srgb, var(--toggle-button-primary-color) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
     }
 
     :host([theme~="success"][checked][readonly]) .switch {
       background-color: transparent;
-      border-color: color-mix(in srgb, var(--lumo-success-color, var(--aura-green)) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
+      border-color: color-mix(in srgb, var(--toggle-button-success-color) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
     }
 
     :host([theme~="error"][checked][readonly]) .switch {
       background-color: transparent;
-      border-color: color-mix(in srgb, var(--lumo-error-color, var(--aura-red)) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
+      border-color: color-mix(in srgb, var(--toggle-button-error-color) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
     }
 
     :host([theme~="warning"][checked][readonly]) .switch {
       background-color: transparent;
-      border-color: color-mix(in srgb, var(--lumo-warning-color, var(--aura-yellow)) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
+      border-color: color-mix(in srgb, var(--toggle-button-warning-color) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
     }
 
     :host([theme~="contrast"][checked][readonly]) .switch {
       background-color: transparent;
-      border-color: color-mix(in srgb, var(--lumo-contrast, var(--aura-neutral)) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
+      border-color: color-mix(in srgb, var(--toggle-button-contrast-color) 40%, var(--lumo-contrast-30pct, var(--vaadin-border-color)));
     }
   `;
 
