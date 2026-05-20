@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.flowingcode.vaadin.addons</groupId>
     <artifactId>toggle-button-addon</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>Toggle Button Add-On</name>
     <description>Toggle button built on Vaadin components with support for customizable labels and icons</description>
     <url>https://github.com/FlowingCode/ToggleButton</url>
@@ -41,7 +39,7 @@
         <url>https://github.com/FlowingCode/ToggleButton</url>
         <connection>scm:git:git://github.com/FlowingCode/ToggleButton.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:/FlowingCode/ToggleButton.git</developerConnection>
-        <tag>master</tag>
+        <tag>1.0.0</tag>
     </scm>
     
     <developers>
@@ -503,16 +501,16 @@
                              <target name="copy-demo">
                                 <copy todir="${project.basedir}/src/main" failonerror="false">
                                     <fileset dir="${project.basedir}/src/test">
-                                        <include name="**"/>
-                                        <exclude name="**/it/*"/>
-                                        <exclude name="**/test/*"/>
+                                        <include name="**" />
+                                        <exclude name="**/it/*" />
+                                        <exclude name="**/test/*" />
                                     </fileset>
                                 </copy>
                                 <copy todir="${project.basedir}/src/main/resources/META-INF/resources/frontend" failonerror="false">
-                                    <fileset dir="${project.basedir}/src/main/resources/META-INF/frontend"/>
+                                    <fileset dir="${project.basedir}/src/main/resources/META-INF/frontend" />
                                 </copy>
                                 <delete failonerror="false">
-                                    <fileset dir="${project.basedir}/src/main/resources/META-INF/frontend"/>
+                                    <fileset dir="${project.basedir}/src/main/resources/META-INF/frontend" />
                                 </delete>
                              </target>
                           </configuration>
