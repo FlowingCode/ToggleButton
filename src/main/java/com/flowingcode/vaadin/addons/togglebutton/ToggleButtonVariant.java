@@ -32,26 +32,29 @@ import com.vaadin.flow.component.shared.ThemeVariant;
 public enum ToggleButtonVariant implements ThemeVariant {
     /** Renders the toggle at a smaller size (32x18 px track). */
     SMALL("small"),
-    /** Renders the toggle at the default medium size (44x24 px track). */
+    /**
+     * Renders the toggle at a medium size (44x24 px track). Without a size variant, the toggle uses
+     * the native switch size of the active theme.
+     */
     MEDIUM("medium"),
     /** Renders the toggle at a larger size (56x32 px track). */
     LARGE("large"),
     /**
      * Renders a wider switch track optimized for touch interaction. Can be combined with size
      * variants: the track width is increased by 28 px while preserving the height of the chosen
-     * size.
+     * size. Without a size variant, it uses the {@link #MEDIUM} size as the base.
      */
     LONGSWIPE("longswipe"),
     /** Applies the primary color to the checked state. */
-    PRIMARY("primary"),
+    PRIMARY("color-primary"),
     /** Applies the success color to the checked state. */
-    SUCCESS("success"),
+    SUCCESS("color-success"),
     /** Applies the warning color to the checked state. */
-    WARNING("warning"),
+    WARNING("color-warning"),
     /** Applies the error color to the checked state. */
-    ERROR("error"),
+    ERROR("color-error"),
     /** Applies the contrast color to the checked state. */
-    CONTRAST("contrast");
+    CONTRAST("color-contrast");
 
     private final String variant;
 

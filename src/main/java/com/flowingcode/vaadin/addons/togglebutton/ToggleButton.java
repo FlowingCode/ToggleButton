@@ -19,39 +19,88 @@
  */
 package com.flowingcode.vaadin.addons.togglebutton;
 
-import com.vaadin.flow.component.AbstractSinglePropertyField;
+import com.vaadin.flow.component.AbstractField;
+import com.vaadin.flow.component.BlurNotifier.BlurEvent;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.FocusNotifier.FocusEvent;
+import com.vaadin.flow.component.FocusOption;
+import com.vaadin.flow.component.Focusable;
 import com.vaadin.flow.component.HasAriaLabel;
-import com.vaadin.flow.component.HasComponents;
+import com.vaadin.flow.component.HasHelper;
 import com.vaadin.flow.component.HasLabel;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.checkbox.Switch;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.shared.HasThemeVariant;
 import com.vaadin.flow.component.shared.HasTooltip;
+import com.vaadin.flow.component.shared.HasValidationProperties;
 import com.vaadin.flow.component.shared.Tooltip;
+import com.vaadin.flow.dom.SignalBinding;
+import com.vaadin.flow.shared.Registration;
+import com.vaadin.flow.signals.Signal;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
- * A toggle button component built on Vaadin with support for customizable labels and icons.
+ * A toggle button component built on the core Vaadin {@link Switch}, with support for customizable
+ * labels and icons on both sides.
  *
- * <p>The component displays a switch with optional left and right labels or icons, and fires a
- * value-change event when toggled.
+ * <p>The switch itself (value, keyboard, focus, ARIA role and state, read-only and disabled
+ * behavior) is provided by an inner {@link Switch}. This component adds the field label, the side
+ * labels and icons, label highlighting, helper text, error message and theme variants around it.
+ * All of them are rendered as regular (light DOM) elements, so the switch can reference them for
+ * accessibility and they can be styled from the application.
+ *
+ * <p>The field label, helper text, error message and required indicator are implemented here on
+ * purpose, even though {@link Switch} has its own. The ones in {@link Switch} render next to the
+ * track, which would place them inside the row, between the side labels and icons. The inner
+ * switch is still marked as required (for {@code aria-required}) and invalid, and is linked to
+ * these elements with {@code aria-labelledby} and {@code aria-describedby}.
  *
  * @since 1.0.0
  */
 @Tag("fc-toggle-button")
 @JsModule("./fc-toggle-button.js")
-public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Boolean>
+@CssImport("./styles/fc-toggle-button.css")
+public class ToggleButton extends AbstractField<ToggleButton, Boolean>
     implements HasSize,
-        HasComponents,
         HasLabel,
         HasAriaLabel,
         HasTooltip,
+        HasHelper,
+        HasValidationProperties,
+        Focusable<ToggleButton>,
         HasThemeVariant<ToggleButtonVariant> {
 
-    private ItemLabelGenerator<Boolean> itemLabelGenerator = b -> "";
-    private Tooltip tooltip;
+    // Random, not a JVM counter: ids are serialized with the session and must stay unique after it
+    // is restored on another node or after a restart
+    private final String idPrefix = "fc-toggle-button-" + UUID.randomUUID();
+
+    private final Switch toggle = new Switch();
+    private final Span label = part(new Span(), "label");
+    private final Div row = part(new Div(), "row");
+    private final Span leftLabel = part(new Span(), "left-label");
+    private final Span rightLabel = part(new Span(), "right-label");
+    private final Div helper = part(new Div(), "helper");
+    private final Span error = part(new Span(), "error");
+
+    private Component leftIcon;
+    private Component rightIcon;
+    private Component helperComponent;
+    private Span boundHelperText;
+    private String labelText;
+    private String ariaLabel;
+    private String ariaLabelledBy;
+    private String errorMessage;
 
     /** Creates a new toggle button with an initial value of {@code false}. */
     public ToggleButton() {
@@ -65,11 +114,27 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
      * @since 1.0.0
      */
     public ToggleButton(boolean initialValue) {
-        super("checked", initialValue, false);
-        if (initialValue) {
-            getElement().setAttribute("checked", "");
-        }
-        setSynchronizedEvent("checked-changed");
+        super(false);
+        // The wrapper owns validation; the inner switch only reflects the invalid state
+        toggle.setManualValidation(true);
+        toggle.addValueChangeListener(e -> {
+            if (e.isFromClient()) {
+                setModelValue(e.getValue(), true);
+            }
+        });
+
+        // Side labels are read through aria-labelledby when needed, not in reading order
+        leftLabel.getElement().setAttribute("aria-hidden", "true");
+        rightLabel.getElement().setAttribute("aria-hidden", "true");
+        // The error live region stays rendered (empty when valid) and only its text changes, so
+        // screen readers announce it; a region that appears with its content is often not announced
+        error.getElement().setAttribute("aria-live", "assertive");
+        Stream.of(label, leftLabel, rightLabel, helper).forEach(c -> c.setVisible(false));
+
+        row.add(leftLabel, toggle, rightLabel);
+        getElement().appendChild(label.getElement(), row.getElement(), helper.getElement(),
+            error.getElement());
+        setValue(initialValue);
     }
 
     /**
@@ -95,31 +160,262 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
         setLabel(label);
     }
 
+    private <C extends Component> C part(C component, String name) {
+        component.setId(idPrefix + "-" + name);
+        component.getElement().getClassList().add("fc-toggle-button-" + name);
+        return component;
+    }
+
+    private static boolean isBlank(String s) {
+        return s == null || s.isBlank();
+    }
+
+    /**
+     * Sets the checked state of the toggle.
+     *
+     * @param value the new value; must not be {@code null}
+     * @throws NullPointerException if {@code value} is {@code null}
+     */
     @Override
-    public void setReadOnly(boolean readOnly) {
-        getElement().setProperty("readonly", readOnly);
+    public void setValue(Boolean value) {
+        super.setValue(Objects.requireNonNull(value, "Null value is not supported"));
     }
 
     @Override
-    public boolean isReadOnly() {
-        return getElement().getProperty("readonly", false);
+    protected void setPresentationValue(Boolean value) {
+        toggle.setValue(value);
+    }
+
+    @Override
+    public void setReadOnly(boolean readOnly) {
+        super.setReadOnly(readOnly);
+        toggle.setReadOnly(readOnly);
+    }
+
+    @Override
+    public void setRequiredIndicatorVisible(boolean requiredIndicatorVisible) {
+        super.setRequiredIndicatorVisible(requiredIndicatorVisible);
+        // Sets aria-required on the native input; the inner indicator is hidden by CSS
+        toggle.setRequiredIndicatorVisible(requiredIndicatorVisible);
+    }
+
+    // The inherited bind* defaults only bind a property of this element, so the inner switch, which
+    // is the one that blocks user changes and sets aria-required, is bound as well
+
+    @Override
+    public SignalBinding<Boolean> bindReadOnly(Signal<Boolean> readOnly) {
+        toggle.bindReadOnly(readOnly);
+        return super.bindReadOnly(readOnly);
+    }
+
+    @Override
+    public SignalBinding<Boolean> bindRequiredIndicatorVisible(Signal<Boolean> requiredIndicatorVisible) {
+        toggle.bindRequiredIndicatorVisible(requiredIndicatorVisible);
+        return super.bindRequiredIndicatorVisible(requiredIndicatorVisible);
+    }
+
+    @Override
+    public void setLabel(String label) {
+        labelText = label;
+        this.label.setText(label);
+        this.label.setVisible(!isBlank(label));
+        updateAccessibleName();
+    }
+
+    @Override
+    public String getLabel() {
+        return labelText;
+    }
+
+    @Override
+    public void setAriaLabel(String ariaLabel) {
+        this.ariaLabel = ariaLabel;
+        updateAccessibleName();
+    }
+
+    @Override
+    public Optional<String> getAriaLabel() {
+        return Optional.ofNullable(ariaLabel);
+    }
+
+    @Override
+    public void setAriaLabelledBy(String ariaLabelledBy) {
+        this.ariaLabelledBy = ariaLabelledBy;
+        updateAccessibleName();
+    }
+
+    @Override
+    public Optional<String> getAriaLabelledBy() {
+        return Optional.ofNullable(ariaLabelledBy);
+    }
+
+    /**
+     * The accessible name goes on the inner switch: the ARIA labelledby set by the caller, otherwise
+     * the ARIA label, otherwise the field label, otherwise the side labels. Labels are referenced by
+     * id, so they stay in sync.
+     */
+    private void updateAccessibleName() {
+        if (!isBlank(ariaLabelledBy)) {
+            toggle.setAriaLabel(null);
+            toggle.setAriaLabelledBy(ariaLabelledBy);
+            return;
+        }
+        if (!isBlank(ariaLabel)) {
+            toggle.setAriaLabelledBy((String) null);
+            toggle.setAriaLabel(ariaLabel);
+            return;
+        }
+        toggle.setAriaLabel(null);
+        toggle.setAriaLabelledBy(label.isVisible() ? visibleIds(label) : visibleIds(leftLabel, rightLabel));
+    }
+
+    /**
+     * Joins the ids of the given parts that are present and visible, for ARIA references.
+     *
+     * @return the space-separated ids, or {@code null} when there are none
+     */
+    private static String visibleIds(Component... parts) {
+        String ids = Stream.of(parts)
+            .filter(c -> c != null && c.isVisible())
+            .map(c -> c.getId().orElseThrow())
+            .collect(Collectors.joining(" "));
+        return ids.isEmpty() ? null : ids;
+    }
+
+    @Override
+    public void focus() {
+        toggle.focus();
+    }
+
+    @Override
+    public void focus(FocusOption... options) {
+        toggle.focus(options);
+    }
+
+    @Override
+    public void blur() {
+        toggle.blur();
+    }
+
+    // Focus lands on the inner switch's input, and focus/blur events don't bubble to this element
+
+    @Override
+    public Registration addFocusListener(ComponentEventListener<FocusEvent<ToggleButton>> listener) {
+        return toggle.addFocusListener(e -> listener.onComponentEvent(new FocusEvent<>(this, e.isFromClient())));
+    }
+
+    @Override
+    public Registration addBlurListener(ComponentEventListener<BlurEvent<ToggleButton>> listener) {
+        return toggle.addBlurListener(e -> listener.onComponentEvent(new BlurEvent<>(this, e.isFromClient())));
+    }
+
+    @Override
+    public void setTabIndex(int tabIndex) {
+        toggle.setTabIndex(tabIndex);
+    }
+
+    @Override
+    public int getTabIndex() {
+        return toggle.getTabIndex();
     }
 
     @Override
     public Tooltip setTooltipText(String text) {
-        if (tooltip == null) {
-            tooltip = Tooltip.forComponent(this);
-        }
-        tooltip.setText(text);
-        return tooltip;
+        return toggle.setTooltipText(text);
     }
 
     @Override
     public Tooltip getTooltip() {
-        if (tooltip == null) {
-            tooltip = Tooltip.forComponent(this);
+        return toggle.getTooltip();
+    }
+
+    @Override
+    public void setHelperText(String helperText) {
+        setHelperComponent(isBlank(helperText) ? null : new Span(helperText));
+    }
+
+    @Override
+    public String getHelperText() {
+        return helperComponent instanceof Span span ? span.getText() : null;
+    }
+
+    /**
+     * Binds the helper text to a signal. The helper is shown only while the text is not blank, and
+     * linked to the switch with {@code aria-describedby}.
+     *
+     * @param helperText the signal to bind the helper text to; must not be {@code null}
+     * @return the signal binding
+     */
+    @Override
+    public SignalBinding<String> bindHelperText(Signal<String> helperText) {
+        Objects.requireNonNull(helperText, "Signal cannot be null");
+        Span text = new Span();
+        setHelperComponent(text);
+        boundHelperText = text;
+        SignalBinding<String> binding = text.getElement().bindText(helperText);
+        binding.onChange(context -> updateHelper());
+        updateHelper();
+        return binding;
+    }
+
+    @Override
+    public void setHelperComponent(Component component) {
+        helper.removeAll();
+        helperComponent = component;
+        boundHelperText = null;
+        if (component != null) {
+            helper.add(component);
         }
-        return tooltip;
+        updateHelper();
+    }
+
+    private void updateHelper() {
+        // A helper text bound to a signal may be blank; any other helper component is always shown
+        helper.setVisible(helperComponent != null
+            && (helperComponent != boundHelperText || !isBlank(boundHelperText.getText())));
+        updateDescribedBy();
+    }
+
+    @Override
+    public Component getHelperComponent() {
+        return helperComponent;
+    }
+
+    @Override
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+        updateError();
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    @Override
+    public void setInvalid(boolean invalid) {
+        getElement().setProperty("invalid", invalid);
+        toggle.setInvalid(invalid);
+        updateError();
+    }
+
+    @Override
+    public boolean isInvalid() {
+        return getElement().getProperty("invalid", false);
+    }
+
+    private boolean isErrorShown() {
+        return isInvalid() && !isBlank(errorMessage);
+    }
+
+    private void updateError() {
+        error.setText(isErrorShown() ? errorMessage : "");
+        updateDescribedBy();
+    }
+
+    /** Helper and error message are linked to the switch by id. */
+    private void updateDescribedBy() {
+        toggle.setAriaDescribedBy(visibleIds(helper, isErrorShown() ? error : null));
     }
 
     /**
@@ -132,14 +428,10 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
      * @since 1.0.0
      */
     public ToggleButton setItemLabelGenerator(ItemLabelGenerator<Boolean> itemLabelGenerator) {
-        this.itemLabelGenerator = itemLabelGenerator;
-        updateLabels();
+        Objects.requireNonNull(itemLabelGenerator);
+        setLeftLabel(itemLabelGenerator.apply(false));
+        setRightLabel(itemLabelGenerator.apply(true));
         return this;
-    }
-
-    private void updateLabels() {
-        getElement().setProperty("leftLabel", itemLabelGenerator.apply(false));
-        getElement().setProperty("rightLabel", itemLabelGenerator.apply(true));
     }
 
     /**
@@ -154,7 +446,7 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
      * @since 1.0.0
      */
     public ToggleButton withHighlightLabel() {
-        getElement().setProperty("highlightLabel", true);
+        getElement().setAttribute("highlight-label", true);
         return this;
     }
 
@@ -169,7 +461,7 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
      * @since 1.0.0
      */
     public ToggleButton withIconsInside() {
-        getElement().setProperty("iconsInside", true);
+        getElement().setAttribute("icons-inside", true);
         return this;
     }
 
@@ -181,7 +473,7 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
      * @since 1.0.0
      */
     public ToggleButton withIconsOutside() {
-        getElement().setProperty("iconsInside", false);
+        getElement().setAttribute("icons-inside", false);
         return this;
     }
 
@@ -193,7 +485,7 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
      * @since 1.0.0
      */
     public ToggleButton withoutHighlightLabel() {
-        getElement().setProperty("highlightLabel", false);
+        getElement().setAttribute("highlight-label", false);
         return this;
     }
 
@@ -205,7 +497,9 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
      * @since 1.0.0
      */
     public ToggleButton setLeftLabel(String label) {
-        getElement().setProperty("leftLabel", label);
+        leftLabel.setText(label);
+        leftLabel.setVisible(!isBlank(label));
+        updateAccessibleName();
         return this;
     }
 
@@ -217,7 +511,9 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
      * @since 1.0.0
      */
     public ToggleButton setRightLabel(String label) {
-        getElement().setProperty("rightLabel", label);
+        rightLabel.setText(label);
+        rightLabel.setVisible(!isBlank(label));
+        updateAccessibleName();
         return this;
     }
 
@@ -229,7 +525,7 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
      * @since 1.0.0
      */
     public ToggleButton setLeftIcon(Component icon) {
-        setSlottedIcon(icon, "left");
+        leftIcon = replaceIcon(leftIcon, icon, "left-icon");
         return this;
     }
 
@@ -241,15 +537,19 @@ public class ToggleButton extends AbstractSinglePropertyField<ToggleButton, Bool
      * @since 1.0.0
      */
     public ToggleButton setRightIcon(Component icon) {
-        setSlottedIcon(icon, "right");
+        rightIcon = replaceIcon(rightIcon, icon, "right-icon");
         return this;
     }
 
-    private void setSlottedIcon(Component icon, String slot) {
-        getElement().getChildren()
-            .filter(e -> slot.equals(e.getAttribute("slot")))
-            .forEach(e -> e.removeFromParent());
-        icon.getElement().setAttribute("slot", slot);
-        add(icon);
+    private Component replaceIcon(Component oldIcon, Component icon, String className) {
+        if (oldIcon != null) {
+            row.remove(oldIcon);
+        }
+        if (icon != null) {
+            icon.getElement().getClassList().add("fc-toggle-button-" + className);
+            icon.getElement().setAttribute("aria-hidden", "true");
+            row.add(icon);
+        }
+        return icon;
     }
 }

@@ -92,11 +92,17 @@ public class ToggleButtonVariantsDemo extends Div {
     HorizontalLayout sizeRow = new HorizontalLayout(small, medium, large);
     HorizontalLayout longswipeRow = new HorizontalLayout(longswipeSmall, longswipeMedium, longswipeLarge);
     HorizontalLayout statesRow = new HorizontalLayout(disabled, readOnly);
+
+    // Disabled color variants
+    HorizontalLayout disabledOnRow = disabledColorRow(true);
+    HorizontalLayout disabledOffRow = disabledColorRow(false);
     // #if vaadin eq 0
     colorRow.getStyle().set("gap", "var(--lumo-space-l, var(--vaadin-gap-l))");
     sizeRow.getStyle().set("gap", "var(--lumo-space-l, var(--vaadin-gap-l))");
     longswipeRow.getStyle().set("gap", "var(--lumo-space-l, var(--vaadin-gap-l))");
     statesRow.getStyle().set("gap", "var(--lumo-space-l, var(--vaadin-gap-l))");
+    disabledOnRow.getStyle().set("gap", "var(--lumo-space-l, var(--vaadin-gap-l))");
+    disabledOffRow.getStyle().set("gap", "var(--lumo-space-l, var(--vaadin-gap-l))");
     // #endif
 
     add(new VerticalLayout(
@@ -107,6 +113,27 @@ public class ToggleButtonVariantsDemo extends Div {
         new H3("Long swipe"),
         longswipeRow,
         new H3("States"),
-        statesRow));
+        statesRow,
+        new H3("Disabled colors - checked"),
+        disabledOnRow,
+        new H3("Disabled colors - unchecked"),
+        disabledOffRow));
+  }
+
+  private static HorizontalLayout disabledColorRow(boolean checked) {
+    HorizontalLayout row = new HorizontalLayout();
+    row.add(disabledColor(checked, "Primary", ToggleButtonVariant.PRIMARY));
+    row.add(disabledColor(checked, "Success", ToggleButtonVariant.SUCCESS));
+    row.add(disabledColor(checked, "Error", ToggleButtonVariant.ERROR));
+    row.add(disabledColor(checked, "Warning", ToggleButtonVariant.WARNING));
+    row.add(disabledColor(checked, "Contrast", ToggleButtonVariant.CONTRAST));
+    return row;
+  }
+
+  private static ToggleButton disabledColor(boolean checked, String label, ToggleButtonVariant variant) {
+    ToggleButton toggle = new ToggleButton(checked).setLeftLabel(label);
+    toggle.addThemeVariants(variant);
+    toggle.setEnabled(false);
+    return toggle;
   }
 }
