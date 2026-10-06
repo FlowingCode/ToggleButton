@@ -1,0 +1,243 @@
+/*-
+ * #%L
+ * Toggle Button Add-On
+ * %%
+ * Copyright (C) 2026 Flowing Code
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
+ * Styles for <fc-toggle-button> and the core <vaadin-switch> inside it.
+ *
+ * The component is rendered as light DOM, so everything here is a regular document rule. For the
+ * switch, only public API is used: the --vaadin-switch-* custom properties and the documented
+ * state attributes and parts. Document rules also win over document-level theme rules such as
+ * Aura's `vaadin-switch[checked] { ... }` by specificity.
+ * Without a size variant the switch keeps the native size of the active theme.
+ */
+
+fc-toggle-button {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--lumo-space-xs, var(--vaadin-gap-xs));
+  font-family: var(--lumo-font-family, var(--aura-font-family));
+  color: var(--lumo-body-text-color, var(--vaadin-text-color));
+  -webkit-tap-highlight-color: transparent;
+  --toggle-button-primary-color: var(--lumo-primary-color, var(--aura-accent-color));
+  --toggle-button-success-color: var(--lumo-success-color, var(--aura-green));
+  --toggle-button-error-color: var(--lumo-error-color, var(--aura-red));
+  --toggle-button-warning-color: var(--lumo-warning-color, var(--aura-yellow));
+  --toggle-button-contrast-color: var(--lumo-contrast, var(--vaadin-text-color));
+  --toggle-button-primary-text-color: var(--lumo-primary-text-color, var(--aura-accent-text-color));
+  --toggle-button-success-text-color: var(--lumo-success-text-color, var(--aura-green-text));
+  --toggle-button-error-text-color: var(--lumo-error-text-color, var(--aura-red-text));
+  --toggle-button-warning-text-color: var(--lumo-warning-text-color, var(--aura-orange-text));
+  --toggle-button-contrast-text-color: var(--lumo-body-text-color, var(--vaadin-text-color));
+}
+
+/* The display rules below would otherwise override the `hidden` attribute */
+fc-toggle-button[hidden],
+fc-toggle-button [hidden] {
+  display: none !important;
+}
+
+/* Field label */
+.fc-toggle-button-label {
+  font-size: var(--lumo-font-size-s, var(--aura-font-size-s));
+  font-weight: 500;
+  color: var(--lumo-secondary-text-color, var(--vaadin-text-color-secondary));
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+}
+
+fc-toggle-button:has(vaadin-switch[required]) .fc-toggle-button-label::after {
+  content: ' *';
+  color: var(--lumo-required-field-indicator-color, var(--vaadin-text-color-secondary));
+}
+
+/* The component shows its own required indicator next to the field label */
+fc-toggle-button > .fc-toggle-button-row > vaadin-switch::part(required-indicator) {
+  display: none;
+}
+
+/* Row: [left-icon] [left-label] [switch] [right-label] [right-icon] */
+.fc-toggle-button-row {
+  display: flex;
+  align-items: center;
+  gap: var(--lumo-space-s, var(--vaadin-gap-s));
+  cursor: pointer;
+  user-select: none;
+  /* Let the page scroll vertically while horizontal swipes reach the component */
+  touch-action: pan-y;
+}
+
+.fc-toggle-button-left-icon { order: 1; }
+.fc-toggle-button-left-label { order: 2; }
+.fc-toggle-button-row > vaadin-switch { order: 3; }
+.fc-toggle-button-right-label { order: 4; }
+.fc-toggle-button-right-icon { order: 5; }
+
+/* Icons inside: [left-label] [left-icon] [switch] [right-icon] [right-label] */
+fc-toggle-button[icons-inside] .fc-toggle-button-left-label { order: 1; }
+fc-toggle-button[icons-inside] .fc-toggle-button-left-icon { order: 2; }
+fc-toggle-button[icons-inside] .fc-toggle-button-right-icon { order: 4; }
+fc-toggle-button[icons-inside] .fc-toggle-button-right-label { order: 5; }
+
+fc-toggle-button:has(vaadin-switch:is([readonly], [disabled])) :is(.fc-toggle-button-label, .fc-toggle-button-row) {
+  cursor: default;
+}
+
+fc-toggle-button:has(vaadin-switch[disabled]) :is(.fc-toggle-button-left-label, .fc-toggle-button-right-label, .fc-toggle-button-left-icon, .fc-toggle-button-right-icon) {
+  opacity: 0.5;
+}
+
+/* Side labels */
+:is(.fc-toggle-button-left-label, .fc-toggle-button-right-label) {
+  font-size: var(--lumo-font-size-s, var(--aura-font-size-s));
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+fc-toggle-button[theme~='small'] :is(.fc-toggle-button-left-label, .fc-toggle-button-right-label) {
+  font-size: var(--lumo-font-size-xs, var(--aura-font-size-xs));
+}
+
+fc-toggle-button[theme~='large'] :is(.fc-toggle-button-left-label, .fc-toggle-button-right-label) {
+  font-size: var(--lumo-font-size-l, var(--aura-font-size-l));
+}
+
+/* Label highlighting: the label on the active side uses the variant color, the other is dimmed */
+fc-toggle-button[highlight-label] {
+  --_toggle-button-active-text-color: var(--toggle-button-primary-text-color);
+}
+
+fc-toggle-button[highlight-label][theme~='color-success'] {
+  --_toggle-button-active-text-color: var(--toggle-button-success-text-color);
+}
+
+fc-toggle-button[highlight-label][theme~='color-error'] {
+  --_toggle-button-active-text-color: var(--toggle-button-error-text-color);
+}
+
+fc-toggle-button[highlight-label][theme~='color-warning'] {
+  --_toggle-button-active-text-color: var(--toggle-button-warning-text-color);
+}
+
+fc-toggle-button[highlight-label][theme~='color-contrast'] {
+  --_toggle-button-active-text-color: var(--toggle-button-contrast-text-color);
+}
+
+fc-toggle-button[highlight-label]:not(:has(vaadin-switch[checked])) .fc-toggle-button-left-label,
+fc-toggle-button[highlight-label]:has(vaadin-switch[checked]) .fc-toggle-button-right-label {
+  color: var(--_toggle-button-active-text-color);
+}
+
+fc-toggle-button[highlight-label]:has(vaadin-switch[checked]) .fc-toggle-button-left-label,
+fc-toggle-button[highlight-label]:not(:has(vaadin-switch[checked])) .fc-toggle-button-right-label {
+  color: var(--lumo-secondary-text-color, var(--vaadin-text-color-secondary));
+  opacity: 0.7;
+}
+
+/* Helper text and error message */
+.fc-toggle-button-helper {
+  font-size: var(--lumo-font-size-xs, var(--aura-font-size-s));
+  color: var(--lumo-secondary-text-color, var(--vaadin-text-color-secondary));
+}
+
+.fc-toggle-button-error {
+  font-size: var(--lumo-font-size-xs, var(--aura-font-size-s));
+  color: var(--lumo-error-text-color, var(--aura-red-text));
+}
+
+/* Size variants */
+fc-toggle-button[theme~='small'] vaadin-switch {
+  --_toggle-button-width: 32px;
+  --vaadin-switch-width: var(--_toggle-button-width);
+  --vaadin-switch-height: 18px;
+  --vaadin-switch-marker-width: 14px;
+  --vaadin-switch-marker-height: 14px;
+}
+
+fc-toggle-button[theme~='medium'] vaadin-switch {
+  --_toggle-button-width: 44px;
+  --vaadin-switch-width: var(--_toggle-button-width);
+  --vaadin-switch-height: 24px;
+  --vaadin-switch-marker-width: 18px;
+  --vaadin-switch-marker-height: 18px;
+}
+
+fc-toggle-button[theme~='large'] vaadin-switch {
+  --_toggle-button-width: 56px;
+  --vaadin-switch-width: var(--_toggle-button-width);
+  --vaadin-switch-height: 32px;
+  --vaadin-switch-marker-width: 24px;
+  --vaadin-switch-marker-height: 24px;
+}
+
+/* Long swipe: 28px wider than the chosen size (medium when no size is set). Must follow the sizes. */
+fc-toggle-button[theme~='longswipe'] vaadin-switch {
+  --vaadin-switch-width: calc(var(--_toggle-button-width, 44px) + 28px);
+}
+
+fc-toggle-button[theme~='longswipe']:not([theme~='small'], [theme~='large']) vaadin-switch {
+  --vaadin-switch-height: 24px;
+  --vaadin-switch-marker-width: 18px;
+  --vaadin-switch-marker-height: 18px;
+}
+
+/* Color variants: only the enabled, editable checked state; read-only and disabled keep the core look */
+fc-toggle-button[theme~='color-primary'] vaadin-switch[checked]:not([readonly], [disabled]) {
+  --vaadin-switch-background: var(--toggle-button-primary-color);
+  --vaadin-switch-icon-color: var(--toggle-button-primary-color);
+}
+
+fc-toggle-button[theme~='color-success'] vaadin-switch[checked]:not([readonly], [disabled]) {
+  --vaadin-switch-background: var(--toggle-button-success-color);
+  --vaadin-switch-icon-color: var(--toggle-button-success-color);
+}
+
+fc-toggle-button[theme~='color-error'] vaadin-switch[checked]:not([readonly], [disabled]) {
+  --vaadin-switch-background: var(--toggle-button-error-color);
+  --vaadin-switch-icon-color: var(--toggle-button-error-color);
+}
+
+fc-toggle-button[theme~='color-warning'] vaadin-switch[checked]:not([readonly], [disabled]) {
+  --vaadin-switch-background: var(--toggle-button-warning-color);
+  --vaadin-switch-icon-color: var(--toggle-button-warning-color);
+}
+
+fc-toggle-button[theme~='color-contrast'] vaadin-switch[checked]:not([readonly], [disabled]) {
+  --vaadin-switch-background: var(--toggle-button-contrast-color);
+  --vaadin-switch-marker-color: var(--lumo-base-color, var(--vaadin-background-color));
+  --vaadin-switch-icon-color: var(--toggle-button-contrast-color);
+}
+
+/* Read-only + checked + color variant: the core read-only look, with the track border tinted with the variant color */
+fc-toggle-button[theme~='color-primary'] { --_toggle-button-variant-color: var(--toggle-button-primary-color); }
+fc-toggle-button[theme~='color-success'] { --_toggle-button-variant-color: var(--toggle-button-success-color); }
+fc-toggle-button[theme~='color-error'] { --_toggle-button-variant-color: var(--toggle-button-error-color); }
+fc-toggle-button[theme~='color-warning'] { --_toggle-button-variant-color: var(--toggle-button-warning-color); }
+fc-toggle-button[theme~='color-contrast'] { --_toggle-button-variant-color: var(--toggle-button-contrast-color); }
+
+fc-toggle-button:is([theme~='color-primary'], [theme~='color-success'], [theme~='color-error'], [theme~='color-warning'], [theme~='color-contrast'])
+  vaadin-switch[readonly][checked] {
+  --vaadin-switch-border-color: color-mix(
+    in srgb,
+    var(--_toggle-button-variant-color) 70%,
+    var(--lumo-contrast-50pct, var(--vaadin-text-color-disabled))
+  );
+}

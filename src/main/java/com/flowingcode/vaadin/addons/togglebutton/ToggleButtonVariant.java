@@ -43,15 +43,15 @@ public enum ToggleButtonVariant implements ThemeVariant {
      */
     LONGSWIPE("longswipe"),
     /** Applies the primary color to the checked state. */
-    PRIMARY("primary"),
+    PRIMARY("color-primary"),
     /** Applies the success color to the checked state. */
-    SUCCESS("success"),
+    SUCCESS("color-success"),
     /** Applies the warning color to the checked state. */
-    WARNING("warning"),
+    WARNING("color-warning"),
     /** Applies the error color to the checked state. */
-    ERROR("error"),
+    ERROR("color-error"),
     /** Applies the contrast color to the checked state. */
-    CONTRAST("contrast");
+    CONTRAST("color-contrast");
 
     private final String variant;
 

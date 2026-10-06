@@ -22,6 +22,7 @@ package com.flowingcode.vaadin.addons.togglebutton.it;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import com.vaadin.testbench.TestBenchElement;
 import org.hamcrest.Description;
@@ -30,6 +31,10 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.junit.Test;
 
 public class ViewIT extends AbstractViewTest {
+
+  public ViewIT() {
+    super("togglebutton");
+  }
 
   private Matcher<TestBenchElement> hasBeenUpgradedToCustomElement =
       new TypeSafeDiagnosingMatcher<TestBenchElement>() {
@@ -57,7 +62,13 @@ public class ViewIT extends AbstractViewTest {
 
   @Test
   public void componentWorks() {
+    // fc-toggle-button has no shadow DOM of its own; it must be defined and wrap an upgraded switch
     TestBenchElement element = $("fc-toggle-button").first();
-    assertThat(element, hasBeenUpgradedToCustomElement);
+    assertTrue(
+        (Boolean)
+            element
+                .getCommandExecutor()
+                .executeScript("return !!customElements.get('fc-toggle-button')"));
+    assertThat(element.$("vaadin-switch").first(), hasBeenUpgradedToCustomElement);
   }
 }

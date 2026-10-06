@@ -21,6 +21,7 @@ package com.flowingcode.vaadin.addons.togglebutton.it;
 
 import com.vaadin.testbench.ScreenshotOnFailureRule;
 import com.vaadin.testbench.TestBench;
+import com.vaadin.testbench.TestBenchElement;
 import com.vaadin.testbench.parallel.ParallelTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Before;
@@ -70,6 +71,16 @@ public abstract class AbstractViewTest extends ParallelTest {
       setDriver(TestBench.createDriver(new ChromeDriver()));
     }
     getDriver().get(getURL(route));
+  }
+
+  /**
+   * Returns the {@code checked} attribute of the core switch inside a toggle button.
+   *
+   * @param toggle the {@code fc-toggle-button} element
+   * @return the attribute value, or {@code null} when the switch is off
+   */
+  protected static String checkedOf(TestBenchElement toggle) {
+    return toggle.$("vaadin-switch").first().getAttribute("checked");
   }
 
   /**

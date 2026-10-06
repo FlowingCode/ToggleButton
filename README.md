@@ -8,17 +8,31 @@
 
 A toggle button component for Vaadin Flow that supports customizable labels and icons on both sides of the toggle.
 
+Starting with version 2.0, the add-on is built on top of the core Vaadin [Switch](https://vaadin.com/docs/latest/components/switch) component. The switch itself (keyboard, focus, accessibility, read-only and disabled states) comes from Vaadin, and the add-on adds side labels, icons, label highlighting, theme variants and touch swipe around it.
+
 ## Features
 
-* Toggle between two states with a single click
+* Toggle between two states with a click, a tap, a swipe, or the Space key
 * Customizable left and right labels
 * Support for icons on both sides via slots
 * Optional label highlighting: active-side label uses the theme variant color (primary, success, warning, error, or contrast), inactive side is dimmed
 * Optional icons-inside layout: icons adjacent to the switch, labels on the outer edges
 * Theme variants: `SMALL`, `MEDIUM`, `LARGE`, `LONGSWIPE`, `PRIMARY`, `SUCCESS`, `WARNING`, `ERROR`, `CONTRAST`
 * `LONGSWIPE` variant produces a wider switch track, optimized for touch interaction; can be combined with size variants
+* Accessible out of the box: announced as a switch with its on/off state, focusable, and operable with the keyboard
+* Form support: helper text, required indicator, error message, and `Binder` validation
+* Works with both the Lumo and Aura themes
 * Fluent API for easy configuration
-* Full integration with Vaadin's `HasValue`, `HasSize`, `HasLabel`, `HasAriaLabel`, and `HasTooltip`
+* Full integration with Vaadin's `HasValue`, `HasSize`, `HasLabel`, `HasAriaLabel`, `HasTooltip`, `HasHelper`, `HasValidationProperties`, and `Focusable`
+
+## Compatibility
+
+| Add-on version | Vaadin version | Java version |
+|---|---|---|
+| 2.x | 25.3 or newer | 21 |
+| 1.x | 24, and 25.0 to 25.2 | 17 (Vaadin 24), 21 (Vaadin 25) |
+
+Version 2.x requires Vaadin 25.3 or newer, because it is built on the core `Switch` introduced in that release. Version 1.x is in maintenance mode for older Vaadin versions.
 
 ## Online demo
 
@@ -145,7 +159,65 @@ toggle.addThemeVariants(ToggleButtonVariant.CONTRAST);
 // Long swipe: wider track, optimized for touch (can be combined with size variants)
 toggle.addThemeVariants(ToggleButtonVariant.LONGSWIPE);
 toggle.addThemeVariants(ToggleButtonVariant.LONGSWIPE, ToggleButtonVariant.LARGE);
+
+// Helper text, shown below the toggle and read by screen readers
+ToggleButton toggle = new ToggleButton("Audit log retention", true);
+toggle.setHelperText("Included on the Business plan.");
+toggle.setReadOnly(true);
 ```
+
+### Forms and validation
+
+`ToggleButton` works with `Binder` like any other Vaadin field. A required toggle is valid when it is on:
+
+```java
+ToggleButton confirm = new ToggleButton("I confirm the trip details are correct")
+    .setLeftLabel("No")
+    .setRightLabel("Yes");
+
+binder.forField(confirm)
+    .asRequired("You must confirm the trip details to continue")
+    .bind(Booking::isConfirmed, Booking::setConfirmed);
+```
+
+The error message can also be set manually with `setErrorMessage(String)` and `setInvalid(boolean)`.
+
+### Accessibility
+
+The toggle is announced by screen readers as a switch with its on/off state. Its accessible name is taken from, in this order:
+
+1. The ARIA label, if set with `setAriaLabel(String)`
+2. The field label
+3. The side labels, joined with " / " (for example, "Off / On")
+
+The side labels and icons are decorative for screen readers. When they carry meaning that "on" and "off" don't convey (for example, "Dark" and "Light"), include it in the field label or the ARIA label.
+
+### Styling
+
+Color variants can be customized with these CSS custom properties on `fc-toggle-button`: `--toggle-button-primary-color`, `--toggle-button-success-color`, `--toggle-button-warning-color`, `--toggle-button-error-color`, and `--toggle-button-contrast-color`.
+
+The switch inside the component is a regular `vaadin-switch`, so it can also be styled with the core [Switch styling properties](https://vaadin.com/docs/latest/components/switch/styling), such as `--vaadin-switch-width` or `--vaadin-switch-background`:
+
+```css
+fc-toggle-button vaadin-switch {
+  --vaadin-switch-width: 48px;
+}
+```
+
+The rest of the component is rendered as regular elements that can be styled with these class names: `fc-toggle-button-label`, `fc-toggle-button-row`, `fc-toggle-button-left-label`, `fc-toggle-button-right-label`, `fc-toggle-button-left-icon`, `fc-toggle-button-right-icon`, `fc-toggle-button-helper`, and `fc-toggle-button-error`.
+
+## Migrating from 1.x
+
+Version 2.0 keeps the 1.x fluent API and value change events, but it has some breaking changes:
+
+* It requires Vaadin 25.3 or newer and Java 21.
+* `ToggleButton` extends `AbstractField` instead of `AbstractSinglePropertyField`. Value change listeners keep working, and the event type is still `ComponentValueChangeEvent<ToggleButton, Boolean>`.
+* `ToggleButton` no longer implements `HasComponents`, so `add(...)` and `remove(...)` aren't available. Use `setLeftIcon(...)` and `setRightIcon(...)` for icons.
+* Without a size variant, the toggle uses the native switch size of the active theme. Previously, the default was the same as `MEDIUM`. Add `ToggleButtonVariant.MEDIUM` to keep the 1.x size.
+* The color variants write different values to the `theme` attribute: `color-primary`, `color-success`, `color-warning`, `color-error`, and `color-contrast` (previously `primary`, `success`, `warning`, `error`, and `contrast`). The Java constants in `ToggleButtonVariant` don't change. This only affects custom CSS that targets the attribute, such as `fc-toggle-button[theme~="error"]`. The old values collided with the theme names that `Binder` adds and removes for validation errors, so a toggle bound with `Binder` lost its `ERROR` or `WARNING` variant.
+* Read-only and disabled states use the core Switch look. In read-only mode, the track border is solid instead of dashed. A checked read-only toggle with a color variant still shows the variant color, as a tint on the track border.
+* The tooltip is attached to the switch, so it opens when hovering or focusing the switch, not the side labels.
+* When swiping, the marker no longer follows the finger. The toggle changes state when the swipe passes half the track width.
 
 ## Special configuration when using Spring
 

@@ -30,7 +30,7 @@ import org.junit.Test;
 public class ToggleButtonVariantsIT extends AbstractViewTest {
 
   public ToggleButtonVariantsIT() {
-    super("variants");
+    super("togglebutton/variants");
   }
 
   private TestBenchElement getToggle(String id) {
@@ -41,27 +41,27 @@ public class ToggleButtonVariantsIT extends AbstractViewTest {
 
   @Test
   public void primaryVariantHasThemeAttribute() {
-    assertTrue(getToggle("primary").getAttribute("theme").contains("primary"));
+    assertTrue(getToggle("primary").getAttribute("theme").contains("color-primary"));
   }
 
   @Test
   public void successVariantHasThemeAttribute() {
-    assertTrue(getToggle("success").getAttribute("theme").contains("success"));
+    assertTrue(getToggle("success").getAttribute("theme").contains("color-success"));
   }
 
   @Test
   public void errorVariantHasThemeAttribute() {
-    assertTrue(getToggle("error").getAttribute("theme").contains("error"));
+    assertTrue(getToggle("error").getAttribute("theme").contains("color-error"));
   }
 
   @Test
   public void warningVariantHasThemeAttribute() {
-    assertTrue(getToggle("warning").getAttribute("theme").contains("warning"));
+    assertTrue(getToggle("warning").getAttribute("theme").contains("color-warning"));
   }
 
   @Test
   public void contrastVariantHasThemeAttribute() {
-    assertTrue(getToggle("contrast").getAttribute("theme").contains("contrast"));
+    assertTrue(getToggle("contrast").getAttribute("theme").contains("color-contrast"));
   }
 
   // --- Size variants ---
@@ -86,14 +86,14 @@ public class ToggleButtonVariantsIT extends AbstractViewTest {
   @Test
   public void colorVariantsInitializedChecked() {
     for (String id : new String[] {"primary", "success", "error", "warning", "contrast"}) {
-      assertNotNull("Expected " + id + " to be checked", getToggle(id).getAttribute("checked"));
+      assertNotNull("Expected " + id + " to be checked", checkedOf(getToggle(id)));
     }
   }
 
   @Test
   public void sizeVariantsInitializedUnchecked() {
     for (String id : new String[] {"small", "medium", "large"}) {
-      assertNull("Expected " + id + " to be unchecked", getToggle(id).getAttribute("checked"));
+      assertNull("Expected " + id + " to be unchecked", checkedOf(getToggle(id)));
     }
   }
 
@@ -102,16 +102,16 @@ public class ToggleButtonVariantsIT extends AbstractViewTest {
   @Test
   public void disabledButtonCannotBeToggled() {
     TestBenchElement disabled = getToggle("disabled");
-    assertNull(disabled.getAttribute("checked"));
+    assertNull(checkedOf(disabled));
     disabled.click();
-    assertNull(disabled.getAttribute("checked"));
+    assertNull(checkedOf(disabled));
   }
 
   @Test
   public void readonlyButtonCannotBeToggled() {
     TestBenchElement readOnly = getToggle("read-only");
-    assertNotNull(readOnly.getAttribute("checked"));
+    assertNotNull(checkedOf(readOnly));
     readOnly.click();
-    assertNotNull(readOnly.getAttribute("checked"));
+    assertNotNull(checkedOf(readOnly));
   }
 }
