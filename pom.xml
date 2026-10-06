@@ -4,16 +4,16 @@
 
     <groupId>com.flowingcode.vaadin.addons</groupId>
     <artifactId>toggle-button-addon</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <name>Toggle Button Add-On</name>
     <description>Toggle button built on Vaadin components with support for customizable labels and icons</description>
     <url>https://github.com/FlowingCode/ToggleButton</url>
 
     <properties>
-        <vaadin.version>24.9.1</vaadin.version>
+        <vaadin.version>25.3.0</vaadin.version>
         <selenium.version>4.10.0</selenium.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <drivers.dir>${project.basedir}/drivers</drivers.dir>
@@ -97,10 +97,14 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <type>jar</type>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-dev</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.1.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -200,6 +204,10 @@
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
                 <version>${vaadin.version}</version>
+                <configuration>
+                    <!-- The plugin still defaults to the deprecated META-INF/resources/frontend -->
+                    <frontendResourcesDirectory>${project.basedir}/src/main/resources/META-INF/frontend</frontendResourcesDirectory>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -506,12 +514,6 @@
                                         <exclude name="**/test/*" />
                                     </fileset>
                                 </copy>
-                                <copy todir="${project.basedir}/src/main/resources/META-INF/resources/frontend" failonerror="false">
-                                    <fileset dir="${project.basedir}/src/main/resources/META-INF/frontend" />
-                                </copy>
-                                <delete failonerror="false">
-                                    <fileset dir="${project.basedir}/src/main/resources/META-INF/frontend" />
-                                </delete>
                              </target>
                           </configuration>
                        </execution> 
@@ -563,28 +565,6 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
-
-        <profile>
-            <id>v25</id>
-            <properties>
-                <maven.compiler.source>21</maven.compiler.source>
-                <maven.compiler.target>21</maven.compiler.target>
-                <vaadin.version>25.0.3</vaadin.version>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>com.vaadin</groupId>
-                    <artifactId>vaadin-dev</artifactId>
-                    <optional>true</optional>
-                </dependency>
-                <dependency>
-                    <groupId>jakarta.servlet</groupId>
-                    <artifactId>jakarta.servlet-api</artifactId>
-                    <version>6.1.0</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
         </profile>
     </profiles>
 
