@@ -57,6 +57,12 @@ import java.util.stream.Stream;
  * All of them are rendered as regular (light DOM) elements, so the switch can reference them for
  * accessibility and they can be styled from the application.
  *
+ * <p>The field label, helper text, error message and required indicator are implemented here on
+ * purpose, even though {@link Switch} has its own. The ones in {@link Switch} render next to the
+ * track, which would place them inside the row, between the side labels and icons. The inner
+ * switch is still marked as required (for {@code aria-required}) and invalid, and is linked to
+ * these elements with {@code aria-labelledby} and {@code aria-describedby}.
+ *
  * @since 1.0.0
  */
 @Tag("fc-toggle-button")
@@ -240,12 +246,21 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
             toggle.setAriaLabel(ariaLabel);
             return;
         }
-        String ids = (label.isVisible() ? Stream.of(label) : Stream.of(leftLabel, rightLabel))
-            .filter(Component::isVisible)
+        toggle.setAriaLabel(null);
+        toggle.setAriaLabelledBy(label.isVisible() ? visibleIds(label) : visibleIds(leftLabel, rightLabel));
+    }
+
+    /**
+     * Joins the ids of the given parts that are present and visible, for ARIA references.
+     *
+     * @return the space-separated ids, or {@code null} when there are none
+     */
+    private static String visibleIds(Component... parts) {
+        String ids = Stream.of(parts)
+            .filter(c -> c != null && c.isVisible())
             .map(c -> c.getId().orElseThrow())
             .collect(Collectors.joining(" "));
-        toggle.setAriaLabel(null);
-        toggle.setAriaLabelledBy(ids.isEmpty() ? null : ids);
+        return ids.isEmpty() ? null : ids;
     }
 
     @Override
@@ -350,11 +365,7 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
 
     /** Helper and error message are linked to the switch by id. */
     private void updateDescribedBy() {
-        String ids = Stream.of(helper.isVisible() ? helper : null, isErrorShown() ? error : null)
-            .filter(Objects::nonNull)
-            .map(c -> c.getId().orElseThrow())
-            .collect(Collectors.joining(" "));
-        toggle.setAriaDescribedBy(ids.isEmpty() ? null : ids);
+        toggle.setAriaDescribedBy(visibleIds(helper, isErrorShown() ? error : null));
     }
 
     /**
