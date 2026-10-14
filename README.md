@@ -14,7 +14,7 @@ Starting with version 2.0, the add-on is built on top of the core Vaadin [Switch
 
 * Toggle between two states with a click, a tap, a swipe, or the Space key
 * Customizable left and right labels
-* Support for icons on both sides via slots
+* Support for icons on both sides, set with `setLeftIcon` and `setRightIcon`
 * Optional label highlighting: active-side label uses the theme variant color (primary, success, warning, error, or contrast), inactive side is dimmed
 * Optional icons-inside layout: icons adjacent to the switch, labels on the outer edges
 * Theme variants: `SMALL`, `MEDIUM`, `LARGE`, `LONGSWIPE`, `PRIMARY`, `SUCCESS`, `WARNING`, `ERROR`, `CONTRAST`
@@ -186,11 +186,12 @@ The error message can also be set manually with `setErrorMessage(String)` and `s
 
 The toggle is announced by screen readers as a switch with its on/off state. Its accessible name is taken from, in this order:
 
-1. The ARIA label, if set with `setAriaLabel(String)`
-2. The field label
-3. The side labels, joined with " / " (for example, "Off / On")
+1. The elements referenced with `setAriaLabelledBy(String)`, if set
+2. The ARIA label, if set with `setAriaLabel(String)`
+3. The field label
+4. The side labels, read in order (for example, "Off On")
 
-The side labels and icons are decorative for screen readers. When they carry meaning that "on" and "off" don't convey (for example, "Dark" and "Light"), include it in the field label or the ARIA label.
+The side labels and icons aren't read on their own, only as part of the name when there is no field label or ARIA label. When there is one and the side labels carry meaning that "on" and "off" don't convey (for example, "Dark" and "Light"), include it in the field label or the ARIA label.
 
 ### Styling
 
