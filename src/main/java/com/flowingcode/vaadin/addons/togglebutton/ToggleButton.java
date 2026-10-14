@@ -20,7 +20,10 @@
 package com.flowingcode.vaadin.addons.togglebutton;
 
 import com.vaadin.flow.component.AbstractField;
+import com.vaadin.flow.component.BlurNotifier.BlurEvent;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.FocusNotifier.FocusEvent;
 import com.vaadin.flow.component.Focusable;
 import com.vaadin.flow.component.HasAriaLabel;
 import com.vaadin.flow.component.HasHelper;
@@ -37,6 +40,7 @@ import com.vaadin.flow.component.shared.HasThemeVariant;
 import com.vaadin.flow.component.shared.HasTooltip;
 import com.vaadin.flow.component.shared.HasValidationProperties;
 import com.vaadin.flow.component.shared.Tooltip;
+import com.vaadin.flow.shared.Registration;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -83,6 +87,7 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
     private Component leftIcon;
     private Component rightIcon;
     private Component helperComponent;
+    private String labelText;
     private String ariaLabel;
     private String ariaLabelledBy;
     private String errorMessage;
@@ -153,9 +158,20 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
         return s == null || s.isBlank();
     }
 
+    /**
+     * Sets the checked state of the toggle.
+     *
+     * @param value the new value; must not be {@code null}
+     * @throws NullPointerException if {@code value} is {@code null}
+     */
+    @Override
+    public void setValue(Boolean value) {
+        super.setValue(Objects.requireNonNull(value, "Null value is not supported"));
+    }
+
     @Override
     protected void setPresentationValue(Boolean value) {
-        toggle.setValue(Boolean.TRUE.equals(value));
+        toggle.setValue(value);
     }
 
     @Override
@@ -173,6 +189,7 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
 
     @Override
     public void setLabel(String label) {
+        labelText = label;
         this.label.setText(label);
         this.label.setVisible(!isBlank(label));
         updateAccessibleName();
@@ -180,7 +197,7 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
 
     @Override
     public String getLabel() {
-        return label.getText();
+        return labelText;
     }
 
     @Override
@@ -237,6 +254,28 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
     @Override
     public void blur() {
         toggle.blur();
+    }
+
+    // Focus lands on the inner switch's input, and focus/blur events don't bubble to this element
+
+    @Override
+    public Registration addFocusListener(ComponentEventListener<FocusEvent<ToggleButton>> listener) {
+        return toggle.addFocusListener(e -> listener.onComponentEvent(new FocusEvent<>(this, e.isFromClient())));
+    }
+
+    @Override
+    public Registration addBlurListener(ComponentEventListener<BlurEvent<ToggleButton>> listener) {
+        return toggle.addBlurListener(e -> listener.onComponentEvent(new BlurEvent<>(this, e.isFromClient())));
+    }
+
+    @Override
+    public void setTabIndex(int tabIndex) {
+        toggle.setTabIndex(tabIndex);
+    }
+
+    @Override
+    public int getTabIndex() {
+        return toggle.getTabIndex();
     }
 
     @Override
