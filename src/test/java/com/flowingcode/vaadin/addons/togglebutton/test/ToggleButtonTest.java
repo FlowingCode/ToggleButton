@@ -21,9 +21,11 @@ package com.flowingcode.vaadin.addons.togglebutton.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import com.flowingcode.vaadin.addons.togglebutton.ToggleButton;
 import com.vaadin.flow.component.BlurNotifier.BlurEvent;
@@ -76,6 +78,37 @@ public class ToggleButtonTest {
     assertEquals(-1, toggle.getTabIndex());
     assertEquals("-1", switchOf(toggle).getElement().getAttribute("tabindex"));
     assertFalse(toggle.getElement().hasAttribute("tabindex"));
+  }
+
+  @Test
+  public void errorRegionStaysRenderedAndOnlyItsTextChanges() {
+    ToggleButton toggle = new ToggleButton();
+    Element error = toggle.getElement().getChildren()
+        .filter(e -> e.getClassList().contains("fc-toggle-button-error"))
+        .findFirst().orElseThrow();
+    String errorId = error.getAttribute("id");
+
+    toggle.setErrorMessage("Required");
+    assertTrue(error.isVisible());
+    assertEquals("", error.getText());
+
+    toggle.setInvalid(true);
+    assertTrue(error.isVisible());
+    assertEquals("Required", error.getText());
+    assertEquals("assertive", error.getAttribute("aria-live"));
+    assertTrue(switchOf(toggle).getAriaDescribedBy().orElse("").contains(errorId));
+
+    toggle.setInvalid(false);
+    assertTrue(error.isVisible());
+    assertEquals("", error.getText());
+    assertFalse(switchOf(toggle).getAriaDescribedBy().orElse("").contains(errorId));
+  }
+
+  @Test
+  public void idsAreUniqueAcrossInstances() {
+    String a = switchOf(new ToggleButton("A")).getAriaLabelledBy().orElseThrow();
+    String b = switchOf(new ToggleButton("B")).getAriaLabelledBy().orElseThrow();
+    assertNotEquals(a, b);
   }
 
   @Test

@@ -43,7 +43,7 @@ import com.vaadin.flow.component.shared.Tooltip;
 import com.vaadin.flow.shared.Registration;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -72,9 +72,9 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
         Focusable<ToggleButton>,
         HasThemeVariant<ToggleButtonVariant> {
 
-    private static final AtomicInteger ID_SEQUENCE = new AtomicInteger();
-
-    private final String idPrefix = "fc-toggle-button-" + ID_SEQUENCE.incrementAndGet();
+    // Random, not a JVM counter: ids are serialized with the session and must stay unique after it
+    // is restored on another node or after a restart
+    private final String idPrefix = "fc-toggle-button-" + UUID.randomUUID();
 
     private final Switch toggle = new Switch();
     private final Span label = part(new Span(), "label");
@@ -116,8 +116,10 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
         // Side labels are read through aria-labelledby when needed, not in reading order
         leftLabel.getElement().setAttribute("aria-hidden", "true");
         rightLabel.getElement().setAttribute("aria-hidden", "true");
+        // The error live region stays rendered (empty when valid) and only its text changes, so
+        // screen readers announce it; a region that appears with its content is often not announced
         error.getElement().setAttribute("aria-live", "assertive");
-        Stream.of(label, leftLabel, rightLabel, helper, error).forEach(c -> c.setVisible(false));
+        Stream.of(label, leftLabel, rightLabel, helper).forEach(c -> c.setVisible(false));
 
         row.add(leftLabel, toggle, rightLabel);
         getElement().appendChild(label.getElement(), row.getElement(), helper.getElement(),
@@ -317,7 +319,6 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
     @Override
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
-        error.setText(errorMessage);
         updateError();
     }
 
@@ -338,15 +339,19 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
         return getElement().getProperty("invalid", false);
     }
 
+    private boolean isErrorShown() {
+        return isInvalid() && !isBlank(errorMessage);
+    }
+
     private void updateError() {
-        error.setVisible(isInvalid() && !isBlank(errorMessage));
+        error.setText(isErrorShown() ? errorMessage : "");
         updateDescribedBy();
     }
 
     /** Helper and error message are linked to the switch by id. */
     private void updateDescribedBy() {
-        String ids = Stream.of(helper, error)
-            .filter(Component::isVisible)
+        String ids = Stream.of(helper.isVisible() ? helper : null, isErrorShown() ? error : null)
+            .filter(Objects::nonNull)
             .map(c -> c.getId().orElseThrow())
             .collect(Collectors.joining(" "));
         toggle.setAriaDescribedBy(ids.isEmpty() ? null : ids);

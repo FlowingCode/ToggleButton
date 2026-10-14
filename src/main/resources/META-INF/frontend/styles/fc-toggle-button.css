@@ -32,7 +32,8 @@ fc-toggle-button {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--lumo-space-xs, var(--vaadin-gap-xs));
+  --_toggle-button-gap: var(--lumo-space-xs, var(--vaadin-gap-xs));
+  gap: var(--_toggle-button-gap);
   font-family: var(--lumo-font-family, var(--aura-font-family));
   color: var(--lumo-body-text-color, var(--vaadin-text-color));
   -webkit-tap-highlight-color: transparent;
@@ -161,6 +162,11 @@ fc-toggle-button[highlight-label]:not(:has(vaadin-switch[checked])) .fc-toggle-b
 .fc-toggle-button-error {
   font-size: var(--lumo-font-size-xs, var(--aura-font-size-s));
   color: var(--lumo-error-text-color, var(--aura-red-text));
+}
+
+/* The error live region stays rendered when empty (not display: none), so cancel its gap instead */
+.fc-toggle-button-error:empty {
+  margin-top: calc(-1 * var(--_toggle-button-gap));
 }
 
 /* Size variants */
