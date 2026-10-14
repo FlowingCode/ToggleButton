@@ -60,13 +60,23 @@ class ToggleButton extends HTMLElement {
   }
 
   _onClick(e) {
-    // The switch handles its own clicks; links, helper text and error message don't toggle
-    if (e.target.closest('vaadin-switch, a, .fc-toggle-button-helper, .fc-toggle-button-error')) return;
+    // Only the field label and the row toggle: not blank space of the host, helper or error message
+    if (!e.target.closest('.fc-toggle-button-label, .fc-toggle-button-row')) return;
+    // The switch handles its own clicks
+    if (e.target.closest('vaadin-switch')) return;
+    // Interactive content passed as an icon or label (links, buttons, fields) keeps its own behavior
+    const interactive = e.target.closest(
+      'a, button, input, select, textarea, [role="button"], [role="link"], [role="checkbox"], [role="switch"]'
+    );
+    if (interactive && this.contains(interactive)) return;
     this._toggle();
   }
 
   _onTouchStart(e) {
-    if (!e.target.closest('.fc-toggle-button-row')) return;
+    // A new touch ends any click suppression left by a previous swipe
+    this._suppressClick = false;
+    const sw = this._switch;
+    if (!sw || sw.disabled || sw.readonly || !e.target.closest('.fc-toggle-button-row')) return;
     const touch = e.touches[0];
     this._touchStartX = touch.clientX;
     this._touchStartY = touch.clientY;
@@ -93,12 +103,14 @@ class ToggleButton extends HTMLElement {
     this._isSwiping = false;
     if (!wasSwiping) return;
 
-    // Threshold: half of the track width
+    // Threshold: half of the track width. The switch mirrors its marker in RTL, so "on" is to the left
     const sw = this._switch;
     const threshold = (sw?.offsetWidth || 40) * 0.5;
-    if (Math.abs(dx) >= threshold && (dx > 0) !== !!sw?.checked) {
+    const towardOn = getComputedStyle(sw).direction === 'rtl' ? dx < 0 : dx > 0;
+    if (Math.abs(dx) >= threshold && towardOn !== !!sw?.checked) {
       this._toggle();
     }
+    // Cleared by the next touchstart, so a real tap right after the swipe still works
     this._suppressClick = true;
     setTimeout(() => {
       this._suppressClick = false;

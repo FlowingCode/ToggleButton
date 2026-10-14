@@ -103,7 +103,8 @@ public class ToggleButtonVariantsIT extends AbstractViewTest {
   public void disabledButtonCannotBeToggled() {
     TestBenchElement disabled = getToggle("disabled");
     assertNull(checkedOf(disabled));
-    disabled.click();
+    clickIn(disabled, "vaadin-switch input");
+    clickIn(disabled, ".fc-toggle-button-right-label");
     assertNull(checkedOf(disabled));
   }
 
@@ -111,7 +112,8 @@ public class ToggleButtonVariantsIT extends AbstractViewTest {
   public void readonlyButtonCannotBeToggled() {
     TestBenchElement readOnly = getToggle("read-only");
     assertNotNull(checkedOf(readOnly));
-    readOnly.click();
+    clickIn(readOnly, "vaadin-switch input");
+    clickIn(readOnly, ".fc-toggle-button-right-label");
     assertNotNull(checkedOf(readOnly));
   }
 }

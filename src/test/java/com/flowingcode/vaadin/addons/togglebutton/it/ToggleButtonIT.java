@@ -45,15 +45,32 @@ public class ToggleButtonIT extends AbstractViewTest {
   @Test
   public void clickTogglesChecked() {
     TestBenchElement toggle = getToggle("basic");
-    toggle.click();
+    clickIn(toggle, "vaadin-switch input");
     assertNotNull(checkedOf(toggle));
   }
 
   @Test
   public void clickAgainTogglesBack() {
     TestBenchElement toggle = getToggle("basic");
-    toggle.click();
-    toggle.click();
+    clickIn(toggle, "vaadin-switch input");
+    assertNotNull(checkedOf(toggle));
+    clickIn(toggle, "vaadin-switch input");
+    assertNull(checkedOf(toggle));
+  }
+
+  @Test
+  public void clickOnSideLabelToggles() {
+    TestBenchElement toggle = getToggle("with-right-label");
+    clickIn(toggle, ".fc-toggle-button-right-label");
+    assertNotNull(checkedOf(toggle));
+  }
+
+  @Test
+  public void clickOnBlankSpaceDoesNotToggle() {
+    // A click whose target is the host itself (e.g. blank space when the component is wider than
+    // its content) must not toggle
+    TestBenchElement toggle = getToggle("with-right-label");
+    clickIn(toggle, null);
     assertNull(checkedOf(toggle));
   }
 

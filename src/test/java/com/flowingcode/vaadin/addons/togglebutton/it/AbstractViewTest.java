@@ -84,6 +84,22 @@ public abstract class AbstractViewTest extends ParallelTest {
   }
 
   /**
+   * Clicks an element inside a toggle button, or the toggle button itself when the selector is
+   * {@code null}.
+   *
+   * @param toggle the {@code fc-toggle-button} element
+   * @param selector a CSS selector relative to the toggle button, or {@code null}
+   */
+  protected static void clickIn(TestBenchElement toggle, String selector) {
+    toggle
+        .getCommandExecutor()
+        .executeScript(
+            "(arguments[1] ? arguments[0].querySelector(arguments[1]) : arguments[0]).click()",
+            toggle,
+            selector);
+  }
+
+  /**
    * Returns deployment host name concatenated with route.
    *
    * @return URL to route
