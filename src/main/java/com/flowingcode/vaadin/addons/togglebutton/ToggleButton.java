@@ -24,6 +24,7 @@ import com.vaadin.flow.component.BlurNotifier.BlurEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.FocusNotifier.FocusEvent;
+import com.vaadin.flow.component.FocusOption;
 import com.vaadin.flow.component.Focusable;
 import com.vaadin.flow.component.HasAriaLabel;
 import com.vaadin.flow.component.HasHelper;
@@ -40,7 +41,9 @@ import com.vaadin.flow.component.shared.HasThemeVariant;
 import com.vaadin.flow.component.shared.HasTooltip;
 import com.vaadin.flow.component.shared.HasValidationProperties;
 import com.vaadin.flow.component.shared.Tooltip;
+import com.vaadin.flow.dom.SignalBinding;
 import com.vaadin.flow.shared.Registration;
+import com.vaadin.flow.signals.Signal;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -93,6 +96,7 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
     private Component leftIcon;
     private Component rightIcon;
     private Component helperComponent;
+    private Span boundHelperText;
     private String labelText;
     private String ariaLabel;
     private String ariaLabelledBy;
@@ -195,6 +199,21 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
         toggle.setRequiredIndicatorVisible(requiredIndicatorVisible);
     }
 
+    // The inherited bind* defaults only bind a property of this element, so the inner switch, which
+    // is the one that blocks user changes and sets aria-required, is bound as well
+
+    @Override
+    public SignalBinding<Boolean> bindReadOnly(Signal<Boolean> readOnly) {
+        toggle.bindReadOnly(readOnly);
+        return super.bindReadOnly(readOnly);
+    }
+
+    @Override
+    public SignalBinding<Boolean> bindRequiredIndicatorVisible(Signal<Boolean> requiredIndicatorVisible) {
+        toggle.bindRequiredIndicatorVisible(requiredIndicatorVisible);
+        return super.bindRequiredIndicatorVisible(requiredIndicatorVisible);
+    }
+
     @Override
     public void setLabel(String label) {
         labelText = label;
@@ -269,6 +288,11 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
     }
 
     @Override
+    public void focus(FocusOption... options) {
+        toggle.focus(options);
+    }
+
+    @Override
     public void blur() {
         toggle.blur();
     }
@@ -315,14 +339,40 @@ public class ToggleButton extends AbstractField<ToggleButton, Boolean>
         return helperComponent instanceof Span span ? span.getText() : null;
     }
 
+    /**
+     * Binds the helper text to a signal. The helper is shown only while the text is not blank, and
+     * linked to the switch with {@code aria-describedby}.
+     *
+     * @param helperText the signal to bind the helper text to; must not be {@code null}
+     * @return the signal binding
+     */
+    @Override
+    public SignalBinding<String> bindHelperText(Signal<String> helperText) {
+        Objects.requireNonNull(helperText, "Signal cannot be null");
+        Span text = new Span();
+        setHelperComponent(text);
+        boundHelperText = text;
+        SignalBinding<String> binding = text.getElement().bindText(helperText);
+        binding.onChange(context -> updateHelper());
+        updateHelper();
+        return binding;
+    }
+
     @Override
     public void setHelperComponent(Component component) {
         helper.removeAll();
         helperComponent = component;
+        boundHelperText = null;
         if (component != null) {
             helper.add(component);
         }
-        helper.setVisible(component != null);
+        updateHelper();
+    }
+
+    private void updateHelper() {
+        // A helper text bound to a signal may be blank; any other helper component is always shown
+        helper.setVisible(helperComponent != null
+            && (helperComponent != boundHelperText || !isBlank(boundHelperText.getText())));
         updateDescribedBy();
     }
 
