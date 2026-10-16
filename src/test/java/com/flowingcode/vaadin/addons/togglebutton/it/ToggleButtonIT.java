@@ -30,7 +30,7 @@ import org.junit.Test;
 public class ToggleButtonIT extends AbstractViewTest {
 
   public ToggleButtonIT() {
-    super("labels");
+    super("togglebutton/labels");
   }
 
   private TestBenchElement getToggle(String id) {
@@ -39,22 +39,39 @@ public class ToggleButtonIT extends AbstractViewTest {
 
   @Test
   public void initialValueIsFalse() {
-    assertNull(getToggle("basic").getAttribute("checked"));
+    assertNull(checkedOf(getToggle("basic")));
   }
 
   @Test
   public void clickTogglesChecked() {
     TestBenchElement toggle = getToggle("basic");
-    toggle.click();
-    assertNotNull(toggle.getAttribute("checked"));
+    clickIn(toggle, "vaadin-switch input");
+    assertNotNull(checkedOf(toggle));
   }
 
   @Test
   public void clickAgainTogglesBack() {
     TestBenchElement toggle = getToggle("basic");
-    toggle.click();
-    toggle.click();
-    assertNull(toggle.getAttribute("checked"));
+    clickIn(toggle, "vaadin-switch input");
+    assertNotNull(checkedOf(toggle));
+    clickIn(toggle, "vaadin-switch input");
+    assertNull(checkedOf(toggle));
+  }
+
+  @Test
+  public void clickOnSideLabelToggles() {
+    TestBenchElement toggle = getToggle("with-right-label");
+    clickIn(toggle, ".fc-toggle-button-right-label");
+    assertNotNull(checkedOf(toggle));
+  }
+
+  @Test
+  public void clickOnBlankSpaceDoesNotToggle() {
+    // A click whose target is the host itself (e.g. blank space when the component is wider than
+    // its content) must not toggle
+    TestBenchElement toggle = getToggle("with-right-label");
+    clickIn(toggle, null);
+    assertNull(checkedOf(toggle));
   }
 
   @Test
@@ -65,7 +82,7 @@ public class ToggleButtonIT extends AbstractViewTest {
             toggle
                 .getCommandExecutor()
                 .executeScript(
-                    "return arguments[0].shadowRoot.querySelector('.label').textContent", toggle);
+                    "return arguments[0].querySelector('.fc-toggle-button-left-label:not([hidden]), .fc-toggle-button-right-label:not([hidden])').textContent", toggle);
     assertEquals("Off", text);
   }
 
@@ -77,7 +94,7 @@ public class ToggleButtonIT extends AbstractViewTest {
             toggle
                 .getCommandExecutor()
                 .executeScript(
-                    "return arguments[0].shadowRoot.querySelector('.label').textContent", toggle);
+                    "return arguments[0].querySelector('.fc-toggle-button-left-label:not([hidden]), .fc-toggle-button-right-label:not([hidden])').textContent", toggle);
     assertEquals("On", text);
   }
 
@@ -89,7 +106,7 @@ public class ToggleButtonIT extends AbstractViewTest {
             toggle
                 .getCommandExecutor()
                 .executeScript(
-                    "return Array.from(arguments[0].shadowRoot.querySelectorAll('.label'))"
+                    "return Array.from(arguments[0].querySelectorAll('.fc-toggle-button-left-label:not([hidden]), .fc-toggle-button-right-label:not([hidden])'))"
                         + ".map(l => l.textContent).join(',')",
                     toggle);
     assertEquals("Off,On", texts);
@@ -97,11 +114,26 @@ public class ToggleButtonIT extends AbstractViewTest {
 
   @Test
   public void highlightLabelAttributeIsReflected() {
-    assertNotNull(getToggle("highlight-primary").getAttribute("highlightlabel"));
+    assertNotNull(getToggle("highlight-primary").getAttribute("highlight-label"));
+  }
+
+  @Test
+  public void switchIsNamedBySideLabelsWhenThereIsNoFieldLabel() {
+    TestBenchElement toggle = getToggle("with-both-labels");
+    String name =
+        (String)
+            toggle
+                .getCommandExecutor()
+                .executeScript(
+                    "const input = arguments[0].querySelector('vaadin-switch input');"
+                        + "return input.getAttribute('role') + ':' + input.getAttribute('aria-labelledby')"
+                        + ".split(' ').map(id => document.getElementById(id).textContent).join(' ')",
+                    toggle);
+    assertEquals("switch:Off On", name);
   }
 
   @Test
   public void noHighlightLabelByDefault() {
-    assertNull(getToggle("basic").getAttribute("highlightlabel"));
+    assertNull(getToggle("basic").getAttribute("highlight-label"));
   }
 }

@@ -16,20 +16,7 @@ on:
 
 jobs:
 
-  build-vaadin24:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build (Vaadin 24)
-      run: mvn -B package --file pom.xml
-
-  build-vaadin25:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -39,6 +26,5 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
-    - name: Build (Vaadin 25)
-      run: mvn -B package --file pom.xml -Pv25
-
+    - name: Build
+      run: mvn -B package --file pom.xml
