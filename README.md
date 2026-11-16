@@ -1,5 +1,5 @@
-[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/toggle-button-addon)
-[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/toggle-button-addon.svg)](https://vaadin.com/directory/component/toggle-button-addon)
+[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/toggle-button-add-on)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/toggle-button-add-on.svg)](https://vaadin.com/directory/component/toggle-button-add-on)
 [![Build Status](https://jenkins.flowingcode.com/job/ToggleButton-addon/badge/icon)](https://jenkins.flowingcode.com/job/ToggleButton-addon)
 [![Maven Central](https://img.shields.io/maven-central/v/com.flowingcode.vaadin.addons/toggle-button-addon)](https://mvnrepository.com/artifact/com.flowingcode.vaadin.addons/toggle-button-addon)
 [![Javadoc](https://img.shields.io/badge/javadoc-00b4f0)](https://javadoc.flowingcode.com/artifact/com.flowingcode.vaadin.addons/toggle-button-addon)
@@ -40,7 +40,7 @@ Version 2.x requires Vaadin 25.3 or newer, because it is built on the core `Swit
 
 ## Download release
 
-[Available in Vaadin Directory](https://vaadin.com/directory/component/toggle-button-addon)
+[Available in Vaadin Directory](https://vaadin.com/directory/component/toggle-button-add-on)
 
 ### Maven install
 
